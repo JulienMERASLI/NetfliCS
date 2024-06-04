@@ -14,16 +14,16 @@ function UsersTable({ users, onSuccessfulUserDeletion }) {
         <thead>
           <tr>
             <th>Email</th>
-            <th>First name</th>
-            <th>Last name</th>
+            <th>Pseudo</th>
+            <th>Birthdate</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
             <tr key={user.email}>
               <td>{user.email}</td>
-              <td>{user.firstname}</td>
-              <td>{user.lastname}</td>
+              <td>{user.pseudo}</td>
+              <td>{user.birthdate}</td>
               <td>
                 <button onClick={() => deleteUser(user.id)}>Delete</button>
               </td>

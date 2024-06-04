@@ -1,10 +1,12 @@
 import express from 'express';
 import logger from 'morgan';
+import passport from 'passport';
+import session from 'express-session';
 import cors from 'cors';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import moviesRouter from './routes/movies.js';
-import authRouter from './routes/auth.js';
+import authRouter from './routes/login.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -19,6 +21,14 @@ appDataSource
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
+    app.use(
+      session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: false,
+      })
+    );
+    app.use(passport.authenticate('session'));
 
     // Register routes
     app.use('/', indexRouter);

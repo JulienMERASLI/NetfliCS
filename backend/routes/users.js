@@ -1,4 +1,5 @@
 import express from 'express';
+import crypto from 'crypto';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 
@@ -13,32 +14,35 @@ router.get('/', function (req, res) {
     });
 });
 
-router.post('/new', function (req, res) {
-  const userRepository = appDataSource.getRepository(User);
-  const newUser = userRepository.create({
-    email: req.body.email,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-  });
-
-  userRepository
-    .save(newUser)
-    .then(function (savedUser) {
-      res.status(201).json({
-        message: 'User successfully created',
-        id: savedUser.id,
-      });
-    })
-    .catch(function (error) {
-      console.error(error);
-      if (error.code === '23505') {
-        res.status(400).json({
-          message: `User with email "${newUser.email}" already exists`,
-        });
-      } else {
-        res.status(500).json({ message: 'Error while creating the user' });
+router.post('/new', function (req, res, next) {
+  console.log(req.body.password);
+  const salt = crypto.randomBytes(16);
+  crypto.pbkdf2(
+    req.body.password,
+    salt,
+    310000,
+    32,
+    'sha256',
+    function (err, hashedPassword) {
+      if (err) {
+        return next(err);
       }
-    });
+      appDataSource
+        .getRepository(User)
+        .insert({
+          email: req.body.username,
+          pseudo: req.body.pseudo,
+          birthdate: req.body.birthdate,
+          password: hashedPassword,
+          salt: salt,
+        })
+        .then(function (user) {
+          req.login(user, function () {
+            res.redirect('http://localhost:3000/');
+          });
+        });
+    }
+  );
 });
 
 router.delete('/:userId', function (req, res) {
