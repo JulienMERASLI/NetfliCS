@@ -1,0 +1,46 @@
+dialog {
+  position: fixed;
+  width: 80vw;
+  height: 80vh;
+  border-radius: 10px;
+  border: none;
+  overflow: hidden;
+  background-color: #a8a8a8b4;
+}
+
+.titleDiv img {
+  width: 15em;
+  height: auto;
+  border-radius: 10px;
+  float: right;
+}
+
+.category {
+  font-weight: bold;
+}
+
+.container {
+  overflow-y: auto;
+}
+
+#app.no-scroll {
+  pointer-events: none;
+  opacity: 0.8;
+  filter: blur(15px);
+}
+
+h2.dialogTitle {
+  text-align: center;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+.closeButton {
+  border: none;
+  background-color: rgb(54, 54, 54);
+  color: rgb(212, 191, 213);
+  padding: 0.8em 2em;
+  border-radius: 50px;
+}
