@@ -14,6 +14,10 @@ authRouter.post(
   })
 );
 
+authRouter.get('/connected', function (req, res) {
+  res.json({ connected: req.isAuthenticated() });
+});
+
 authRouter.post('/logout', function (req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -25,7 +29,7 @@ authRouter.post('/logout', function (req, res, next) {
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, username: user.username });
+    cb(null, { id: user.id, username: user.email });
   });
 });
 

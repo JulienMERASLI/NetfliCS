@@ -1,7 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import nprogress from 'nprogress';
 import { useDebounce } from 'use-debounce';
+import useFetchConnected from '../../Hook/useFetchConnected';
 import { Movie } from '../../components/Movie/Movie';
 import './Home.css';
 import 'nprogress/nprogress.css';
@@ -46,6 +48,13 @@ const useFetchMovies = (movieName) => {
 export const MovieSelectedContext = createContext([]);
 
 function Home() {
+  const connected = useFetchConnected();
+
+  const navigate = useNavigate();
+  if (connected !== null && !connected) {
+    navigate('/login');
+  }
+
   const [movieName, setMovieName] = useState('');
   const [debouncedMovieName] = useDebounce(movieName, 300);
 
