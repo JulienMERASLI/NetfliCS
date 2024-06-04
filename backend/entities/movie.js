@@ -6,12 +6,11 @@ const Movie = new typeorm.EntitySchema({
     id: {
       primary: true,
       type: Number,
-      generated: true,
     },
-    title: {
-      type: String,
+    averageRating: {
+      type: Number,
     },
-    releaseDate: {
+    category: {
       type: String,
     },
   },

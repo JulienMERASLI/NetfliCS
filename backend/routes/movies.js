@@ -20,14 +20,23 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/new', (req, res) => {
+router.post('/new', async (req, res) => {
   const movieRepository = appDataSource.getRepository(Movie);
   const newMovie = movieRepository.create({
-    title: req.body.title,
-    releaseDate: req.body.releaseDate,
+    id: req.body.id,
+    averageRating: req.body.averageRating,
+    category: req.body.category,
   });
-  movieRepository.save(newMovie);
-  res.status(201).json({ message: 'Film crée' });
+  try {
+    await movieRepository.save(newMovie);
+  } catch (e) {
+    if (e.code !== 'ER_DUP_ENTRY') {
+      console.log(e);
+      res.status(500).json({ message: 'Erreur 500' });
+    }
+  } finally {
+    res.status(201).json({ message: 'Film créé' });
+  }
 });
 
 router.delete('/:id', async (req, res) => {
