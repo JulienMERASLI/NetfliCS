@@ -1,4 +1,5 @@
 .movie {
+  all: unset;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +9,7 @@
   border-radius: 10px;
 }
 
-h2 {
+h2.cardTitle {
   width: min-content;
   min-width: 200px;
   text-align: center;
@@ -18,9 +19,15 @@ p {
   margin-top: auto;
 }
 
-img {
+img.cardImage {
   width: 180px;
   height: auto;
   aspect-ratio: 2/3;
   border-radius: 10px;
+  transition: 0.5s ease-out;
+  transform: scale(1);
+}
+
+img.cardImage:hover {
+  transform: scale(1.1);
 }
