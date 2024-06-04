@@ -18,18 +18,6 @@ const MovieUser = new typeorm.EntitySchema({
       type: Number,
     },
   },
-  relations: {
-    movie: {
-      target: 'Movie',
-      type: 'many-to-one',
-      joinColumn: true,
-    },
-    user: {
-      target: 'User',
-      type: 'many-to-one',
-      joinColumn: true,
-    },
-  },
 });
 
 export default MovieUser;

@@ -2,7 +2,8 @@ import { useState } from 'react';
 import './Auth.css';
 
 function Auth() {
-  const [login, setMovieName] = useState('');
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <div className="Auth-container">
@@ -11,14 +12,27 @@ function Auth() {
         {' '}
         <p>Login : </p>
         <input
-          id="search"
-          placeholder="Rechercher..."
+          className="login-input"
+          placeholder="Enter your login"
           type="text"
-          value={movieName}
-          onChange={(e) => setMovieName(e.target.value)}
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
         />
       </div>
-      <button onClick={() => setCounter(counter + 1)}>Increment counter</button>
+
+      <div>
+        {' '}
+        <p>Password : </p>
+        <input
+          className="password-input"
+          placeholder="Enter your password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      <button>Connect</button>
     </div>
   );
 }
