@@ -2,15 +2,34 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   padding: 5px;
   font-size: calc(10px + 2vmin);
+
+  --border-radius: 10px;
+  --padding-side: 35px;
 }
 
-.Header-container > :not(:last-child) {
-  margin-right: 10px;
+.Header-container > :last-child {
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  padding-right: var(--padding-side);
+}
+
+.Header-container > :first-child {
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  padding-left: var(--padding-side);
 }
 
 .Link {
   font-weight: 700;
   color: white;
+  text-decoration: none;
+  background-color: #231e27;
+  padding: 10px 15px;
+}
+
+.Link:hover {
+  text-decoration: underline;
 }

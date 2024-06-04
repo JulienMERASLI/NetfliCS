@@ -2,8 +2,18 @@
   margin-right: 10px;
 }
 
+.add-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
 .add-user-input {
   padding: 5px;
+  display: inline-block;
+  border-radius: 5px;
+  outline: none;
+  width: fit-content;
 }
 
 .add-user-button {
