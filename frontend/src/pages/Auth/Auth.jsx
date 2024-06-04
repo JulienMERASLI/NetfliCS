@@ -2,23 +2,41 @@ import { useState } from 'react';
 import './Auth.css';
 
 function Auth() {
-  const [login, setMovieName] = useState('');
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <div className="Auth-container">
       <h1>NetfliCS</h1>
-      <div>
-        {' '}
-        <p>Login : </p>
-        <input
-          id="search"
-          placeholder="Rechercher..."
-          type="text"
-          value={movieName}
-          onChange={(e) => setMovieName(e.target.value)}
-        />
-      </div>
-      <button onClick={() => setCounter(counter + 1)}>Increment counter</button>
+      <form action="http://localhost:8000/login/password" method="post">
+        <div>
+          <label htmlFor="email">Login : </label>
+          <input
+            id="email"
+            className="login-input"
+            name="email"
+            placeholder="Enter your login"
+            type="text"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password">Password : </label>
+          <input
+            id="password"
+            className="password-input"
+            name="password"
+            placeholder="Enter your password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        <button type="submit">Sign in</button>
+      </form>
     </div>
   );
 }

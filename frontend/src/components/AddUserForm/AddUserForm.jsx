@@ -4,8 +4,10 @@ import './AddUserForm.css';
 
 const DEFAULT_FORM_VALUES = {
   email: '',
-  firstname: '',
-  lastname: '',
+  pseudo: '',
+  birthdate: '',
+  password: '',
+  confirmPassword: '',
 };
 
 function AddUserForm({ onSuccessfulUserCreation }) {
@@ -14,39 +16,18 @@ function AddUserForm({ onSuccessfulUserCreation }) {
   const [userCreationError, setUserCreationError] = useState(null);
   const [userCreationSuccess, setUserCreationSuccess] = useState(null);
 
-  const displayCreationSuccessMessage = () => {
-    setUserCreationSuccess('New user created successfully');
-    setTimeout(() => {
-      setUserCreationSuccess(null);
-    }, 3000);
-  };
-
-  const saveUser = (event) => {
-    // This avoid default page reload behavior on form submit
-    event.preventDefault();
-
-    setUserCreationError(null);
-
-    axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/users/new`, formValues)
-      .then(() => {
-        displayCreationSuccessMessage();
-        setFormValues(DEFAULT_FORM_VALUES);
-        onSuccessfulUserCreation();
-      })
-      .catch((error) => {
-        setUserCreationError('An error occured while creating new user.');
-        console.error(error);
-      });
-  };
-
   return (
     <div>
-      <form className="add-user-form" onSubmit={saveUser}>
+      <form
+        className="add-user-form"
+        action="http://localhost:8000/users/new"
+        method="post"
+      >
         <input
           className="add-user-input"
           required
           type="email"
+          name="username"
           placeholder="Email"
           value={formValues.email}
           onChange={(event) =>
@@ -55,18 +36,47 @@ function AddUserForm({ onSuccessfulUserCreation }) {
         />
         <input
           className="add-user-input"
-          placeholder="First name"
-          value={formValues.firstname}
+          placeholder="Pseudo"
+          name="pseudo"
+          value={formValues.pseudo}
           onChange={(event) =>
-            setFormValues({ ...formValues, firstname: event.target.value })
+            setFormValues({ ...formValues, pseudo: event.target.value })
           }
         />
         <input
           className="add-user-input"
-          placeholder="Last name"
-          value={formValues.lastname}
+          placeholder="birthdate"
+          name="birthdate"
+          value={formValues.birthdate}
+          type="date"
           onChange={(event) =>
-            setFormValues({ ...formValues, lastname: event.target.value })
+            setFormValues({ ...formValues, birthdate: event.target.value })
+          }
+        />
+
+        <input
+          className="add-user-input"
+          placeholder="password"
+          name="password"
+          id="password"
+          value={formValues.password}
+          type="password"
+          onChange={(event) =>
+            setFormValues({ ...formValues, password: event.target.value })
+          }
+        />
+
+        <input
+          className="add-user-input"
+          placeholder="confirmPassword"
+          name="confirmPassword"
+          value={formValues.confirmPassword}
+          type="password"
+          onChange={(event) =>
+            setFormValues({
+              ...formValues,
+              confirmPassword: event.target.value,
+            })
           }
         />
         <button className="add-user-button" type="submit">
