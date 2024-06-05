@@ -95,7 +95,7 @@ const useFetchMovie = (movieId, setRating, rating) => {
                 withCredentials: true,
               })
               .then((res) => {
-                if (res.data.note) {
+                if (res.data && res.data.note) {
                   setRating(res.data.note);
                 }
               });
@@ -196,7 +196,7 @@ export const MovieDialog = () => {
                 onClick={() => setMovieSelectedId(null)}
                 className="closeButton"
               >
-                Fermer
+                ✖
               </button>
             </>
           ))}
