@@ -7,6 +7,7 @@ import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import moviesRouter from './routes/movies.js';
 import authRouter from './routes/login.js';
+import recommendedRouter from './routes/recommended.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -36,6 +37,7 @@ appDataSource
     app.use('/', authRouter);
     app.use('/users', usersRouter);
     app.use('/movies', moviesRouter);
+    app.use('/recommended', recommendedRouter);
 
     // Register 404 middleware and error handler
     app.use(routeNotFoundJsonHandler); // this middleware must be registered after all routes to handle 404 correctly
