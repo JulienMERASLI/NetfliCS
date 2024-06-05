@@ -2,6 +2,11 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import pairwise_distances
 import sqlite3
+import argparse
+
+argparser = argparse.ArgumentParser()
+argparser.add_argument('--user', type=int, required=True)
+user_id = argparser.parse_args().user
 
 # Connexion à la base de données
 conn = sqlite3.connect('database.sqlite3')
@@ -61,4 +66,4 @@ def top_highest_rated_movie_ids_for_user(user_id):
     return top_highest_rated_movies_for_user
     
 
-
+print(top_highest_rated_movie_ids_for_user(user_id))
