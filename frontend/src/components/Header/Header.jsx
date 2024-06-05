@@ -9,14 +9,7 @@ const Header = () => {
   function logout() {
     fetch('http://localhost:8000/logout', {
       method: 'POST',
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        setCookie('connect.sid', 'value');
-        removeCookie('connect.sid');
-        navigate('/login');
-      });
+    }).then((res) => {});
   }
 
   return (

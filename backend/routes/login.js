@@ -6,6 +6,18 @@ import { appDataSource } from '../datasource.js';
 
 const authRouter = express.Router();
 
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
+    cb(null, { id: user.id, username: user.email });
+  });
+});
+
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
+    return cb(null, user);
+  });
+});
+
 authRouter.post(
   '/login/password',
   passport.authenticate('local', {
@@ -19,20 +31,12 @@ authRouter.post('/logout', function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.json({ message: 'Logged out' });
+    res.redirect('http://localhost:3000/');
   });
 });
 
-passport.serializeUser(function (user, cb) {
-  process.nextTick(function () {
-    cb(null, { id: user.id, username: user.username });
-  });
-});
-
-passport.deserializeUser(function (user, cb) {
-  process.nextTick(function () {
-    return cb(null, user);
-  });
+authRouter.get('/connected', function (req, res) {
+  res.json({ connected: req.isAuthenticated() });
 });
 
 passport.use(
