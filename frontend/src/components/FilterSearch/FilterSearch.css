@@ -1,0 +1,35 @@
+.global {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.filters {
+  height: fit-content;
+  margin-right: auto;
+  background-color: #231e27;
+  border-radius: 20px;
+  padding: 1%;
+}
+
+select {
+  background-color: #231e27;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 0.8em;
+}
+
+.movies {
+  flex-direction: column;
+  height: fit-content;
+  align-items: center;
+  width: 100%;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
