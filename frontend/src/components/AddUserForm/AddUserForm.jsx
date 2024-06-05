@@ -59,6 +59,7 @@ function AddUserForm() {
           name="password"
           id="password"
           required
+          minLength={8}
           value={formValues.password}
           type="password"
           autoComplete="new-password"
@@ -74,6 +75,7 @@ function AddUserForm() {
           value={formValues.confirmPassword}
           type="password"
           required
+          minLength={8}
           autoComplete="new-password"
           onChange={(event) =>
             setFormValues({
