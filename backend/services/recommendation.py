@@ -1,11 +1,10 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.metrics.pairwise import pairwise_distances
 import sqlite3
 
 # Connexion à la base de données
-conn = sqlite3.connect('backend/database.sqlite3')
+conn = sqlite3.connect('database.sqlite3')
 
 # Fetch des données de la base de données
 cursor_movie = conn.execute("SELECT * FROM movie")
@@ -19,7 +18,7 @@ list_movie_user = cursor_movie_user.fetchall()
 
 # Créer des DataFrames de données
 movie = pd.DataFrame(list_movie, columns=['id', 'averageRating', 'category'])
-user = pd.DataFrame(list_user, columns=['id', 'email', 'pseudo', 'birthdate', 'password'])
+user = pd.DataFrame(list_user, columns=['id', 'email', 'pseudo', 'birthdate', 'password', 'salt'])
 movie_user = pd.DataFrame(list_movie_user, columns=['movie_id', 'user_id', 'status', 'note'])
 
 # Créer the movie_table pivot table
