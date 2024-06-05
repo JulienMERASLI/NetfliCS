@@ -3,11 +3,10 @@ import { exec } from 'child_process';
 // Appel de scripts Python
 
 exec('python backend/recommendation.py', (error, stdout, stderr) => {
-    if (error) {
-        console.error(`Error: ${error.message}`);
-        return
+  if (error) {
+    console.error(`Error: ${error.message}`);
 
-            ;
-    }
-    console.log(`${stdout}`);
+    return;
+  }
+  console.log(`${stdout}`);
 });
