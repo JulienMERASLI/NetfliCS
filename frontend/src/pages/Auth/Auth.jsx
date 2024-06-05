@@ -17,6 +17,7 @@ function Auth() {
             name="email"
             placeholder="Enter your login"
             type="text"
+            autoComplete="email"
             value={login}
             onChange={(e) => setLogin(e.target.value)}
           />
@@ -31,6 +32,7 @@ function Auth() {
             placeholder="Enter your password"
             type="password"
             value={password}
+            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

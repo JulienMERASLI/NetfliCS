@@ -51,7 +51,6 @@ export const MovieSelectedContext = createContext([]);
 
 function Home() {
   const connected = useFetchConnected();
-  console.log(connected);
 
   const navigate = useNavigate();
   if (connected !== null && !connected) {

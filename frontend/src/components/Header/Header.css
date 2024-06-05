@@ -23,6 +23,7 @@
 }
 
 .Link {
+  all: inherit;
   font-weight: 700;
   color: white;
   text-decoration: none;
