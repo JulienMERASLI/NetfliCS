@@ -9,7 +9,7 @@ const useFetch = (url, setState, method = 'GET') => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setState(data.connected);
+        setState(data);
       });
   }, [method, setState, url]);
 };

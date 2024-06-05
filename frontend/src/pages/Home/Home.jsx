@@ -5,7 +5,6 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import { useDebounce } from 'use-debounce';
 import useFetchConnected from '../../Hook/useFetchConnected';
-import { Movie } from '../../components/Movie/Movie';
 import './Home.css';
 import 'nprogress/nprogress.css';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
@@ -15,12 +14,22 @@ import { Recommandation } from '../../components/Recommandation/Recommandation';
 export const API_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo';
 
+export const usePage = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const page = parseInt(searchParams.get('page') || '1');
+
+  const navigate = useNavigate();
+
+  const setPage = (p) => navigate(`?page=${p}`);
+
+  return [page, setPage];
+};
+
 const useFetchMovies = (movieName) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(null);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const page = searchParams.get('page') || '1';
+  const [page] = usePage();
 
   useEffect(() => {
     if (loading) {
@@ -58,7 +67,7 @@ const useFetchMovies = (movieName) => {
 export const MovieSelectedContext = createContext([]);
 
 function Home() {
-  const connected = useFetchConnected();
+  const { connected } = useFetchConnected();
 
   const navigate = useNavigate();
   useEffect(() => {

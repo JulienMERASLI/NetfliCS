@@ -8,7 +8,7 @@ const authRouter = express.Router();
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, username: user.email });
+    cb(null, { id: user.id, username: user.email, pseudo: user.pseudo });
   });
 });
 
@@ -36,7 +36,7 @@ authRouter.post('/logout', function (req, res, next) {
 });
 
 authRouter.get('/connected', function (req, res) {
-  res.json({ connected: req.isAuthenticated() });
+  res.json({ connected: req.isAuthenticated(), pseudo: req.user?.pseudo });
 });
 
 passport.use(

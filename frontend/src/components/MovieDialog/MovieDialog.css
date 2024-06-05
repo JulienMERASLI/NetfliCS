@@ -39,8 +39,12 @@ body.no-scroll {
 
 .closeButton {
   border: none;
-  background-color: rgb(54, 54, 54);
-  color: rgb(212, 191, 213);
-  padding: 0.8em 2em;
+  color: rgb(54, 54, 54);
+  background-color: transparent;
+  font-size: 1.5em;
   border-radius: 50px;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  cursor: pointer;
 }

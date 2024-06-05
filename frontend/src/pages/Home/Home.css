@@ -23,6 +23,22 @@
   height: 1em;
 }
 
+.buttonDiv {
+  margin: 1em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.buttonDiv button {
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
 .replacementText {
   margin-top: 2em;
 }

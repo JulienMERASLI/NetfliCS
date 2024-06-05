@@ -5,7 +5,7 @@ import nprogress from 'nprogress';
 import useFetchConnected from '../../Hook/useFetchConnected';
 
 const Header = () => {
-  const connected = useFetchConnected();
+  const { connected, pseudo } = useFetchConnected();
 
   const location = useLocation();
 
@@ -16,9 +16,6 @@ const Header = () => {
 
   return (
     <div className="Header-container">
-      <Link className="Link" to="/">
-        Home
-      </Link>
       {connected === false && (
         <>
           <Link className="Link" to="/login">
@@ -29,13 +26,18 @@ const Header = () => {
           </Link>
         </>
       )}
-      <Link className="Link" to="/about">
-        About
-      </Link>
       {connected === true && (
-        <form method="POST" action="http://localhost:8000/logout">
-          <button className="Link">Logout</button>
-        </form>
+        <>
+          <Link className="Link" to="/">
+            Home
+          </Link>
+          <form method="POST" action="http://localhost:8000/logout">
+            <button className="Link">Logout</button>
+          </form>
+          <Link className="Link" to="/myList">
+            {pseudo}
+          </Link>
+        </>
       )}
     </div>
   );
