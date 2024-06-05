@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import './AddUserForm.css';
 
 const DEFAULT_FORM_VALUES = {
@@ -10,11 +9,8 @@ const DEFAULT_FORM_VALUES = {
   confirmPassword: '',
 };
 
-function AddUserForm({ onSuccessfulUserCreation }) {
+function AddUserForm() {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
-
-  const [userCreationError, setUserCreationError] = useState(null);
-  const [userCreationSuccess, setUserCreationSuccess] = useState(null);
 
   return (
     <div>
@@ -39,6 +35,7 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           placeholder="Pseudo"
           name="pseudo"
           value={formValues.pseudo}
+          autoComplete="username"
           onChange={(event) =>
             setFormValues({ ...formValues, pseudo: event.target.value })
           }
@@ -61,6 +58,7 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           id="password"
           value={formValues.password}
           type="password"
+          autoComplete="new-password"
           onChange={(event) =>
             setFormValues({ ...formValues, password: event.target.value })
           }
@@ -72,6 +70,7 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           name="confirmPassword"
           value={formValues.confirmPassword}
           type="password"
+          autoComplete="new-password"
           onChange={(event) =>
             setFormValues({
               ...formValues,
@@ -83,12 +82,6 @@ function AddUserForm({ onSuccessfulUserCreation }) {
           Add user
         </button>
       </form>
-      {userCreationSuccess !== null && (
-        <div className="user-creation-success">{userCreationSuccess}</div>
-      )}
-      {userCreationError !== null && (
-        <div className="user-creation-error">{userCreationError}</div>
-      )}
     </div>
   );
 }

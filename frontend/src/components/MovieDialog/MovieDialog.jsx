@@ -59,15 +59,24 @@ export const MovieDialog = () => {
   }, [movieSelectedId]);
 
   useEffect(() => {
-    const handler = (e) => {
+    const currentDialog = dialog.current;
+
+    const escapeHandler = (e) => {
       if (e.key === 'Escape') {
         setMovieSelectedId(null);
       }
     };
-    document.body.addEventListener('keydown', handler);
+    const outsideClickHandler = (e) => {
+      if (e.target === dialog.current) {
+        setMovieSelectedId(null);
+      }
+    };
+    document.body.addEventListener('keydown', escapeHandler);
+    currentDialog.addEventListener('click', outsideClickHandler);
 
     return () => {
-      document.body.removeEventListener('keydown', handler);
+      document.body.removeEventListener('keydown', escapeHandler);
+      currentDialog.removeEventListener('click', outsideClickHandler);
     };
   }, [movieSelectedId, setMovieSelectedId]);
 
