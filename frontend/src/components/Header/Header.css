@@ -1,31 +1,45 @@
 .Header-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   font-size: calc(10px + 2vmin);
-
-  --border-radius: 10px;
-  --padding-side: 20px;
-}
-
-.Header-container > :first-child {
-  border-top-left-radius: var(--border-radius);
-  border-bottom-left-radius: var(--border-radius);
-  padding-left: var(--padding-side);
 }
 
 .Link {
   all: inherit;
+  border-radius: 10px;
   font-weight: 700;
   color: white;
   text-decoration: none;
   background-color: #231e27;
   padding: 10px 15px;
   font-size: 0.8em;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
 }
 
 .Link:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  background-color: hsl(273, 13%, 30%);
+}
+.logoContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Links-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  gap: 10px;
+  right: 0;
+  top: 0;
+}
+
+@media (min-width: 600px) {
+  .Links-container {
+    position: absolute;
+  }
 }

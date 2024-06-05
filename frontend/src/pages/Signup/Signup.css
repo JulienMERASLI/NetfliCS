@@ -1,0 +1,17 @@
+.Users-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Users-container > :not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.users-loading-error {
+  color: red;
+}
+
+.inputDiv {
+  padding: 0.5em 0;
+}

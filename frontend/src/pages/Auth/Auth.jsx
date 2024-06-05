@@ -7,13 +7,18 @@ function Auth() {
 
   return (
     <div className="Auth-container">
-      <h1>NetfliCS</h1>
-      <form action="http://localhost:8000/login/password" method="post">
-        <div>
-          <label htmlFor="email">Login : </label>
+      <form
+        action="http://localhost:8000/login/password"
+        method="post"
+        className="loginForm"
+      >
+        <div className="inputDiv">
+          <label htmlFor="email" className="formLabel">
+            Login :{' '}
+          </label>
           <input
             id="email"
-            className="login-input"
+            className="formInput"
             name="email"
             placeholder="Enter your login"
             type="text"
@@ -23,11 +28,13 @@ function Auth() {
           />
         </div>
 
-        <div>
-          <label htmlFor="password">Password : </label>
+        <div className="inputDiv">
+          <label htmlFor="password" className="formLabel">
+            Password :{' '}
+          </label>
           <input
             id="password"
-            className="password-input"
+            className="formInput"
             name="password"
             placeholder="Enter your password"
             type="password"
@@ -37,7 +44,11 @@ function Auth() {
           />
         </div>
 
-        <button type="submit">Sign in</button>
+        <div className="submitDiv">
+          <button type="submit" className="submitButton">
+            Sign in
+          </button>
+        </div>
       </form>
     </div>
   );
