@@ -87,7 +87,6 @@ function Home() {
   return (
     <MovieSelectedContext.Provider value={[movieSelected, setMovieSelected]}>
       <div className="App">
-        <h1>Films</h1>
         <div id="searchDiv">
           <input
             id="search"

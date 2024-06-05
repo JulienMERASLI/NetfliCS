@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_KEY } from '../../pages/Home/Home';
+import nprogress from 'nprogress';
+import { API_KEY, usePage } from '../../pages/Home/Home';
 import './FilterSearch.css';
 import { SearchResults } from '../../SearchResults/SearchResults';
 
@@ -16,11 +17,26 @@ const sortChoices = [
 
 const useFetchCategories = (currentCategories, sortBy, setMovies) => {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const [page] = usePage();
 
   useEffect(() => {
-    fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', {
-      headers: { Authorization: `Bearer ${API_KEY}` },
-    })
+    if (loading) {
+      nprogress.start();
+    } else {
+      nprogress.done();
+    }
+  });
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(
+      `https://api.themoviedb.org/3/genre/movie/list?language=en&page=${page}`,
+      {
+        headers: { Authorization: `Bearer ${API_KEY}` },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         setCategories(data.genres);
@@ -28,16 +44,16 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     const category_filter = currentCategories.join('%2C'); // %2C is the URL encoding for a comma
-    let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&language=en-US&page=1&sort_by=${sortBy}.desc`;
+    let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&page=${page}&language=en-US&sort_by=${sortBy}.desc`;
     if (currentCategories.length !== 0) {
-      console.log(category_filter);
       url += `&with_genres=${category_filter}`;
     }
 
+    setLoading(true);
     axios
       .get(url, {
         headers: {
@@ -46,20 +62,25 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
       })
       .then((response) => {
         setMovies(response.data.results);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [currentCategories, sortBy, setMovies]);
+  }, [currentCategories, sortBy, setMovies, page]);
 
-  return categories;
+  return { categories, loading };
 };
 
 export const FilterSearch = () => {
   const [sortBy, setSortBy] = useState('popularity');
   const [currentCategories, setCurrentCategories] = useState([]);
   const [movies, setMovies] = useState([]);
-  const categories = useFetchCategories(currentCategories, sortBy, setMovies);
+  const { categories, loading } = useFetchCategories(
+    currentCategories,
+    sortBy,
+    setMovies
+  );
 
   return (
     <div className="global">
@@ -96,7 +117,7 @@ export const FilterSearch = () => {
         </ul>
       </div>
       <div className="movies">
-        <SearchResults loading={false} movies={movies} />
+        <SearchResults loading={loading} movies={movies} />
       </div>
     </div>
   );

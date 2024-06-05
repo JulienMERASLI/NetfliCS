@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './AddUserForm.css';
 
 const DEFAULT_FORM_VALUES = {
@@ -11,6 +11,27 @@ const DEFAULT_FORM_VALUES = {
 
 function AddUserForm() {
   const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
+  const form = useRef(null);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+
+  useEffect(() => {
+    const currentForm = form.current;
+    const handler = (e) => {
+      e.preventDefault();
+      if (formValues.password !== formValues.confirmPassword) {
+        setPasswordMismatch(true);
+
+        return;
+      }
+      form.current.submit();
+    };
+
+    currentForm.addEventListener('submit', handler);
+
+    return () => {
+      currentForm.removeEventListener('submit', handler);
+    };
+  }, [formValues.confirmPassword, formValues.password]);
 
   return (
     <div>
@@ -18,7 +39,11 @@ function AddUserForm() {
         className="add-user-form"
         action="http://localhost:8000/users/new"
         method="post"
+        ref={form}
       >
+        {passwordMismatch && (
+          <p className="user-creation-error">Passwords do not match</p>
+        )}
         <div className="inputDiv">
           <label htmlFor="email" className="formLabel">
             Email :{' '}
@@ -45,6 +70,7 @@ function AddUserForm() {
             className="add-user-input formInput"
             placeholder="Pseudo"
             name="pseudo"
+            autoComplete="username"
             required
             value={formValues.pseudo}
             onChange={(event) =>
