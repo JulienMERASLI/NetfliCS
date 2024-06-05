@@ -6,27 +6,6 @@ import { appDataSource } from '../datasource.js';
 
 const authRouter = express.Router();
 
-authRouter.post(
-  '/login/password',
-  passport.authenticate('local', {
-    successRedirect: 'http://localhost:3000/',
-    failureRedirect: 'http://localhost:3000/login',
-  })
-);
-
-authRouter.get('/connected', function (req, res) {
-  res.json({ connected: req.isAuthenticated() });
-});
-
-authRouter.post('/logout', function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.json({ message: 'Logged out' });
-  });
-});
-
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
     cb(null, { id: user.id, username: user.email });
@@ -37,6 +16,27 @@ passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
     return cb(null, user);
   });
+});
+
+authRouter.post(
+  '/login/password',
+  passport.authenticate('local', {
+    successRedirect: 'http://localhost:3000/',
+    failureRedirect: 'http://localhost:3000/login',
+  })
+);
+
+authRouter.post('/logout', function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('http://localhost:3000/');
+  });
+});
+
+authRouter.get('/connected', function (req, res) {
+  res.json({ connected: req.isAuthenticated() });
 });
 
 passport.use(

@@ -28,7 +28,8 @@ appDataSource
         saveUninitialized: false,
       })
     );
-    app.use(passport.authenticate('session'));
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     // Register routes
     app.use('/', indexRouter);
