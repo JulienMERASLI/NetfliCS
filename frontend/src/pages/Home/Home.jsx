@@ -53,9 +53,11 @@ function Home() {
   const connected = useFetchConnected();
 
   const navigate = useNavigate();
-  if (connected !== null && !connected) {
-    navigate('/login');
-  }
+  useEffect(() => {
+    if (connected !== null && !connected) {
+      navigate('/login');
+    }
+  }, [connected, navigate]);
 
   const [movieName, setMovieName] = useState('');
   const [debouncedMovieName] = useDebounce(movieName, 300);

@@ -1,21 +1,18 @@
-import { Link, useNavigation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 import { useEffect } from 'react';
-import nProgress from 'nprogress';
+import nprogress from 'nprogress';
 import useFetchConnected from '../../Hook/useFetchConnected';
 
 const Header = () => {
   const connected = useFetchConnected();
 
-  // const navigation = useNavigation();
+  const location = useLocation();
 
-  // useEffect(() => {
-  //   if (navigation.state === 'loading' || navigation.state === 'submitting') {
-  //     nProgress.start();
-  //   } else {
-  //     nProgress.done();
-  //   }
-  // }, [navigation.state]);
+  useEffect(() => {
+    nprogress.start();
+    nprogress.done();
+  }, [location.pathname]);
 
   return (
     <div className="Header-container">
