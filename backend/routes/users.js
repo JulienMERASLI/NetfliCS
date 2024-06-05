@@ -15,7 +15,9 @@ router.get('/', function (req, res) {
 });
 
 router.post('/new', function (req, res, next) {
-  console.log(req.body.password);
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.redirect('http://localhost:3000/signup');
+  }
   const salt = crypto.randomBytes(16);
   crypto.pbkdf2(
     req.body.password,

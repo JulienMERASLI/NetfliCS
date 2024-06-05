@@ -107,7 +107,6 @@ const useFetchMovie = (movieId, setRating, rating) => {
         setRating(0);
       }
     }
-    console.log({ setRating, rating, movieId, loading });
   }, [setRating, rating, movieId, loading, movie.vote_average, movie.genres]);
 
   return { movie, loading };
