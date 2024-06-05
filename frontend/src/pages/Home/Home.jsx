@@ -1,12 +1,16 @@
 import { createContext, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import nprogress from 'nprogress';
 import { useDebounce } from 'use-debounce';
+import useFetchConnected from '../../Hook/useFetchConnected';
 import { Movie } from '../../components/Movie/Movie';
 import './Home.css';
 import 'nprogress/nprogress.css';
+import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
 
-const API_KEY =
+export const API_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo';
 
 const useFetchMovies = (movieName) => {
@@ -46,6 +50,15 @@ const useFetchMovies = (movieName) => {
 export const MovieSelectedContext = createContext([]);
 
 function Home() {
+  const connected = useFetchConnected();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (connected !== null && !connected) {
+      navigate('/login');
+    }
+  }, [connected, navigate]);
+
   const [movieName, setMovieName] = useState('');
   const [debouncedMovieName] = useDebounce(movieName, 300);
 
@@ -77,6 +90,7 @@ function Home() {
                   image={movie.poster_path}
                   releaseDate={movie.release_date}
                   title={movie.title}
+                  id={movie.id}
                 />
               ))}
             </div>
@@ -84,6 +98,7 @@ function Home() {
             <div className="replacementText">Aucun résultat</div>
           ))}
       </div>
+      {createPortal(<MovieDialog />, document.body)}
     </MovieSelectedContext.Provider>
   );
 }

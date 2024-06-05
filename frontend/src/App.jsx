@@ -11,7 +11,7 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/auth" element={<Auth />} />
+        <Route path="login" element={<Auth />} />
         <Route path="users" element={<Users />} />
         <Route path="about" element={<About />} />
         <Route path="addMovie" element={<AddMovieForm />} />

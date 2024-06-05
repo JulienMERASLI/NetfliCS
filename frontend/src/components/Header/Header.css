@@ -10,7 +10,7 @@
   --padding-side: 35px;
 }
 
-.Header-container > :last-child {
+.Header-container > :last-child button {
   border-top-right-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
   padding-right: var(--padding-side);
@@ -23,6 +23,7 @@
 }
 
 .Link {
+  all: inherit;
   font-weight: 700;
   color: white;
   text-decoration: none;
