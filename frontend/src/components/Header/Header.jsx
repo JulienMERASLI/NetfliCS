@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 import './Header.css';
 
 const Header = () => {
+  const [cookies, setCookie, removeCookie] = useCookies(['connect.sid']);
+  const navigate = useNavigate();
+  console.log(cookies);
   function logout() {
     fetch('http://localhost:8000/logout', {
       method: 'POST',
@@ -9,6 +13,9 @@ const Header = () => {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
+        setCookie('connect.sid', 'value');
+        removeCookie('connect.sid');
+        navigate('/login');
       });
   }
 
@@ -26,9 +33,9 @@ const Header = () => {
       <Link className="Link" to="/about">
         About
       </Link>
-      <button className="Link" onClick={logout}>
-        Logout
-      </button>
+      <form method="POST" action='"http://localhost:8000/logout'>
+        <button className="Link">Logout</button>
+      </form>
     </div>
   );
 };
