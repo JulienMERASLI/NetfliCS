@@ -5,7 +5,15 @@ import { API_KEY, MovieSelectedContext } from '../../pages/Home/Home';
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
 
-const useFetchMovie = (movieId) => {
+const DEFAULT_FORM_VALUES = {
+  movie_id: 0,
+  averageRating: 0,
+  rating: 0,
+  status: 0,
+  category: '',
+};
+
+const useFetchMovie = (movieId, setRating, rating) => {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(null);
 
@@ -35,7 +43,72 @@ const useFetchMovie = (movieId) => {
       .catch((error) => {
         console.log(error);
       });
-  }, [movieId]);
+  }, [movieId, setRating]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${movie.id}`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((res) => {
+  //       if (res.data.note) {
+  //         setRating(res.data.note);
+  //       }
+  //       if (movie.id !== undefined) {
+  //         const form_movie = DEFAULT_FORM_VALUES;
+  //         form_movie.movie_id = movie.id;
+  //         form_movie.averageRating = movie.vote_average;
+  //         form_movie.category = movie.genres?.map((g) => g.name).join(', ');
+  //         form_movie.rating = rating;
+
+  //         axios
+  //           .post(
+  //             `${import.meta.env.VITE_BACKEND_URL}/movies/new`,
+  //             form_movie,
+  //             {
+  //               withCredentials: true,
+  //             }
+  //           )
+  //           .catch((error) => {
+  //             console.error(error);
+  //           });
+  //       }
+  //     });
+  // }, [movie, setRating, rating]);
+
+  useEffect(() => {
+    if (loading === false) {
+      if (movieId) {
+        const form_movie = DEFAULT_FORM_VALUES;
+        form_movie.movie_id = movieId;
+        form_movie.averageRating = movie.vote_average;
+        form_movie.category = movie.genres?.map((g) => g.name).join(', ');
+        form_movie.rating = rating;
+
+        axios
+          .post(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, form_movie, {
+            withCredentials: true,
+          })
+          .finally(() => {
+            axios
+              .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${movieId}`, {
+                withCredentials: true,
+              })
+              .then((res) => {
+                if (res.data.note) {
+                  setRating(res.data.note);
+                }
+              });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
+        setRating(0);
+      }
+    }
+    console.log({ setRating, rating, movieId, loading });
+  }, [setRating, rating, movieId, loading, movie.vote_average, movie.genres]);
 
   return { movie, loading };
 };
@@ -44,7 +117,8 @@ export const MovieDialog = () => {
   const [movieSelectedId, setMovieSelectedId] =
     useContext(MovieSelectedContext);
   const dialog = useRef(null);
-  const { movie, loading } = useFetchMovie(movieSelectedId);
+  const [rating, setRating] = useState(0);
+  const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
 
   useEffect(() => {
     if (movieSelectedId) {
@@ -93,6 +167,17 @@ export const MovieDialog = () => {
               <p>
                 <span className="category">Note moyenne:</span>{' '}
                 {movie.vote_average} / 10
+              </p>
+              <p>
+                <span className="rating">Note :</span>{' '}
+                <input
+                  className="rating_input"
+                  type="number"
+                  min="0"
+                  max="5"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.valueAsNumber)}
+                />
               </p>
               <p>
                 <span className="category">Genres:</span>{' '}
