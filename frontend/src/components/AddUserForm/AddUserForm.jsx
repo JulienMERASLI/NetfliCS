@@ -25,6 +25,7 @@ function AddUserForm() {
           type="email"
           name="username"
           placeholder="Email"
+          autoComplete="username"
           value={formValues.email}
           onChange={(event) =>
             setFormValues({ ...formValues, email: event.target.value })
@@ -36,7 +37,6 @@ function AddUserForm() {
           name="pseudo"
           required
           value={formValues.pseudo}
-          autoComplete="username"
           onChange={(event) =>
             setFormValues({ ...formValues, pseudo: event.target.value })
           }
