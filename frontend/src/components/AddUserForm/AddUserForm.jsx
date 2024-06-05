@@ -25,6 +25,7 @@ function AddUserForm() {
           type="email"
           name="username"
           placeholder="Email"
+          autoComplete="username"
           value={formValues.email}
           onChange={(event) =>
             setFormValues({ ...formValues, email: event.target.value })
@@ -34,8 +35,8 @@ function AddUserForm() {
           className="add-user-input"
           placeholder="Pseudo"
           name="pseudo"
+          required
           value={formValues.pseudo}
-          autoComplete="username"
           onChange={(event) =>
             setFormValues({ ...formValues, pseudo: event.target.value })
           }
@@ -44,6 +45,7 @@ function AddUserForm() {
           className="add-user-input"
           placeholder="birthdate"
           name="birthdate"
+          required
           value={formValues.birthdate}
           type="date"
           onChange={(event) =>
@@ -56,6 +58,8 @@ function AddUserForm() {
           placeholder="password"
           name="password"
           id="password"
+          required
+          minLength={8}
           value={formValues.password}
           type="password"
           autoComplete="new-password"
@@ -70,6 +74,8 @@ function AddUserForm() {
           name="confirmPassword"
           value={formValues.confirmPassword}
           type="password"
+          required
+          minLength={8}
           autoComplete="new-password"
           onChange={(event) =>
             setFormValues({
