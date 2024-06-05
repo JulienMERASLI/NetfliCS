@@ -11,6 +11,7 @@ import 'nprogress/nprogress.css';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
 import { SearchResults } from '../../SearchResults/SearchResults';
 import { Recommandation } from '../../components/Recommandation/Recommandation';
+import { FilterSearch } from '../../components/FilterSearch/FilterSearch';
 
 export const API_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo';
@@ -88,7 +89,10 @@ function Home() {
           />
         </div>
         {debouncedMovieName === '' ? (
-          <Recommandation />
+          <>
+            <Recommandation />
+            <FilterSearch />
+          </>
         ) : (
           <SearchResults loading={loading} movies={movies} />
         )}
