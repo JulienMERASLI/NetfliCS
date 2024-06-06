@@ -111,7 +111,7 @@ function Home() {
 // TODO: améliorer le code
 // TODO: faire le .env pour la prod
 // TODO: afficher sur le front les erreurs du back
+// TODO: Afficher pas de recommandation si python crash
 // TODO: validation formulaires serveur
-// TODO: Etoiles aux lieu de notes
 
 export default Home;
