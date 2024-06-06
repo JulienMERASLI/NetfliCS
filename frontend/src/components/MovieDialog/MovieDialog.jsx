@@ -87,6 +87,8 @@ export const MovieDialog = () => {
     useContext(MovieSelectedContext);
   const dialog = useRef(null);
   const [rating, setRating] = useContext(RatingContext);
+  const [hover, setHover] = useState(null);
+  const [totalStars] = useState(10);
   const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
 
   useEffect(() => {
@@ -147,15 +149,34 @@ export const MovieDialog = () => {
                 {movie.vote_average} / 10
               </p>
               <p>
-                <span className="rating">Rating :</span>{' '}
-                <input
-                  className="rating_input"
-                  type="number"
-                  min="0"
-                  max="5"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.valueAsNumber)}
-                />
+                <span className="category">Rating :</span>{' '}
+                {[...Array(totalStars)].map((star, index) => {
+                  const currentRating = index + 1;
+
+                  return (
+                    <label key={index}>
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={currentRating}
+                        onChange={() => setRating(currentRating)}
+                      />
+                      <span
+                        className="star"
+                        style={{
+                          color:
+                            currentRating <= (hover || rating)
+                              ? '#ffc107'
+                              : '#e4e5e9',
+                        }}
+                        onMouseEnter={() => setHover(currentRating)}
+                        onMouseLeave={() => setHover(null)}
+                      >
+                        &#9733;
+                      </span>
+                    </label>
+                  );
+                })}
               </p>
               <p>
                 <span className="category">Genres:</span>{' '}

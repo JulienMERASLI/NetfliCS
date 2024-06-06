@@ -3,6 +3,7 @@ import logger from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
 import moviesRouter from './routes/movies.js';
@@ -12,6 +13,8 @@ import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
 
+dotenv.config();
+
 appDataSource
   .initialize()
   .then(() => {
@@ -19,7 +22,12 @@ appDataSource
     const app = express();
 
     app.use(logger('dev'));
-    app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+    app.use(
+      cors({
+        credentials: true,
+        origin: `${process.env.VITE_FRONTEND_URL}`,
+      })
+    );
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(

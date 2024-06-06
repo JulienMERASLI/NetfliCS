@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/new', function (req, res, next) {
   if (req.body.password !== req.body.confirmPassword) {
-    return res.redirect('http://localhost:3000/signup');
+    return res.redirect(`${process.env.VITE_FRONTEND_URL}/signup`);
   }
   const salt = crypto.randomBytes(16);
   crypto.pbkdf2(
@@ -31,11 +31,11 @@ router.post('/new', function (req, res, next) {
           salt: salt,
         })
         .then(function () {
-          res.redirect('http://localhost:3000/login');
+          res.redirect(`${process.env.VITE_FRONTEND_URL}/login`);
         })
         .catch((e) => {
           console.error(e);
-          res.redirect('http://localhost:3000/signup');
+          res.redirect(`${process.env.VITE_FRONTEND_URL}/signup`);
         });
     }
   );

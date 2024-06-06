@@ -37,7 +37,7 @@ function AddUserForm() {
     <div>
       <form
         className="add-user-form"
-        action="http://localhost:8000/users/new"
+        action={`${import.meta.env.VITE_BACKEND_URL}/users/new`}
         method="post"
         ref={form}
       >

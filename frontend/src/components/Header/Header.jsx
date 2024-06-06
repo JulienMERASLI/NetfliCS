@@ -36,7 +36,10 @@ const Header = () => {
             <Link className="Link" to="/">
               Home
             </Link>
-            <form method="POST" action="http://localhost:8000/logout">
+            <form
+              method="POST"
+              action={`${import.meta.env.VITE_BACKEND_URL}/logout`}
+            >
               <button className="Link">Logout</button>
             </form>
             <Link className="Link" to="/myList">
