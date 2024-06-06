@@ -64,6 +64,7 @@ export const RatingContext = createContext([]);
 
 function Home() {
   const { connected } = useFetchConnected();
+  const [page, setPage] = usePage();
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -90,7 +91,10 @@ function Home() {
               placeholder="Rechercher..."
               type="text"
               value={movieName}
-              onChange={(e) => setMovieName(e.target.value)}
+              onChange={(e) => {
+                setMovieName(e.target.value);
+                setPage(1);
+              }}
             />
           </div>
           {debouncedMovieName === '' ? (
@@ -113,5 +117,6 @@ function Home() {
 // TODO: afficher sur le front les erreurs du back
 // TODO: Afficher pas de recommandation si python crash
 // TODO: validation formulaires serveur
+// TODO: Changer de page pour les filtres
 
 export default Home;

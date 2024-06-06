@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new', (req, res) => {
   if (!req.body.rating) {
     return res.status(400).json({ message: 'Requête invalide' });
   }
@@ -34,30 +34,17 @@ router.post('/new', async (req, res) => {
     return res.status(401).json({ message: 'Non authentifié' });
   }
   const movieUserRepository = appDataSource.getRepository(MovieUser);
-  const newMovieUser = movieUserRepository.create({
-    movie_id: req.body.movie_id,
-    user_id: req.user.id,
-    note: req.body.rating,
-  });
   try {
-    await movieUserRepository.save(newMovieUser);
+    console.log(req.body);
+    movieUserRepository.save({
+      movie_id: req.body.movie_id,
+      user_id: req.user.id,
+      note: req.body.rating,
+    });
+    res.status(201).json({ message: 'Note créée' });
   } catch (e) {
     console.error(e);
-    if (e.code === 'ER_DUP_ENTRY') {
-      // Replace the rating and status if the user has already rated the movie
-      try {
-        await movieUserRepository.update(
-          { movie_id: req.body.movie_id, user_id: req.user.id }, // condition
-          { rating: req.body.rating } // new values
-        );
-      } catch (err) {
-        console.error(err);
-
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-    } else {
-      return res.status(500).json({ message: 'Internal server error' });
-    }
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 

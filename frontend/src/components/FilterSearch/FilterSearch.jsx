@@ -80,6 +80,7 @@ export const FilterSearch = () => {
     <div className="global">
       <div className="filters">
         <h2>Filters</h2>
+        <h3>Sort by</h3>
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           {sortChoices.map((choice) => (
             <option key={choice.value} value={choice.value}>
@@ -111,7 +112,7 @@ export const FilterSearch = () => {
         </ul>
       </div>
       <div className="movies">
-        <SearchResults loading={loading} movies={movies} />
+        <SearchResults loading={loading} movies={movies} showButtons />
       </div>
     </div>
   );

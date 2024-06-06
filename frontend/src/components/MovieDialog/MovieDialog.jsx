@@ -11,9 +11,7 @@ import { useLoading } from '../../Hook/useLoading';
 
 const DEFAULT_FORM_VALUES = {
   movie_id: 0,
-  averageRating: 0,
   rating: 0,
-  category: '',
 };
 
 const useFetchMovie = (movieId, setRating, rating) => {
@@ -47,8 +45,6 @@ const useFetchMovie = (movieId, setRating, rating) => {
       if (movieId) {
         const form_movie = DEFAULT_FORM_VALUES;
         form_movie.movie_id = movieId;
-        form_movie.averageRating = movie.vote_average;
-        form_movie.category = movie.genres?.map((g) => g.name).join(', ');
         form_movie.rating = rating;
 
         fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
@@ -158,7 +154,7 @@ export const MovieDialog = () => {
                       <input
                         type="radio"
                         name="rating"
-                        value={currentRating}
+                        value={rating}
                         onChange={() => setRating(currentRating)}
                       />
                       <span

@@ -8,3 +8,4 @@ venv
 
 # database
 database.sqlite3
+database copy.sqlite3

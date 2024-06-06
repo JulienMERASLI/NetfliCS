@@ -14,13 +14,13 @@ function Auth() {
       >
         <div className="inputDiv">
           <label htmlFor="email" className="formLabel">
-            Login :{' '}
+            Email :{' '}
           </label>
           <input
             id="email"
             className="formInput"
             name="email"
-            placeholder="Enter your login"
+            placeholder="Enter your email address"
             type="text"
             autoComplete="email"
             value={login}
