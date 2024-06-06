@@ -14,7 +14,9 @@ export const useFetchRecommended = (rating) => {
     console.log('fetching recommended');
     setLoading(true);
     axios
-      .get('http://localhost:8000/recommended', { withCredentials: true })
+      .get(`${import.meta.env.VITE_BACKEND_URL}/recommended`, {
+        withCredentials: true,
+      })
       .then(async (response) => {
         const movies_recommended = await Promise.all(
           response.data.recommended.map((movieId) => {

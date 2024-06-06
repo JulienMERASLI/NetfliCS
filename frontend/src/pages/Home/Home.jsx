@@ -108,10 +108,8 @@ function Home() {
   );
 }
 // TODO: style du loading
-// TODO: visuel des recommandations
 // TODO: améliorer le code
 // TODO: faire le .env pour la prod
-// TODO: mettre les variables d'env dans le code
 // TODO: afficher sur le front les erreurs du back
 // TODO: validation formulaires serveur
 

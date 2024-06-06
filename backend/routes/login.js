@@ -21,8 +21,8 @@ passport.deserializeUser(function (user, cb) {
 authRouter.post(
   '/login/password',
   passport.authenticate('local', {
-    successRedirect: 'http://localhost:3000/',
-    failureRedirect: 'http://localhost:3000/login',
+    successRedirect: `${process.env.VITE_FRONTEND_URL}`,
+    failureRedirect: `${process.env.VITE_FRONTEND_URL}/login`,
   })
 );
 
@@ -31,7 +31,7 @@ authRouter.post('/logout', function (req, res, next) {
     if (err) {
       return next(err);
     }
-    res.redirect('http://localhost:3000/');
+    res.redirect(`${process.env.VITE_FRONTEND_URL}`);
   });
 });
 

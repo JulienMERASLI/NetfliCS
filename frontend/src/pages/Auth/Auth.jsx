@@ -8,7 +8,7 @@ function Auth() {
   return (
     <div className="Auth-container">
       <form
-        action="http://localhost:8000/login/password"
+        action={`${import.meta.env.VITE_BACKEND_URL}/login/password`}
         method="post"
         className="loginForm"
       >
