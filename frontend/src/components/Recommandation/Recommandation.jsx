@@ -2,11 +2,17 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { API_KEY, RatingContext } from '../../pages/Home/Home';
+import { useLoading } from '../../Hook/useLoading';
 
 export const useFetchRecommended = (rating) => {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(null);
+
+  useLoading(loading);
 
   useEffect(() => {
+    console.log('fetching recommended');
+    setLoading(true);
     axios
       .get('http://localhost:8000/recommended', { withCredentials: true })
       .then(async (response) => {
@@ -20,21 +26,22 @@ export const useFetchRecommended = (rating) => {
           })
         );
         setMovies(movies_recommended);
+        setLoading(false);
       });
   }, [rating]);
 
-  return { movies };
+  return { movies, loading };
 };
 
 export const Recommandation = () => {
   const [rating, setRating] = useContext(RatingContext);
-  const { movies } = useFetchRecommended(rating);
+  const { movies, loading } = useFetchRecommended(0);
 
   return (
     <div>
       <h2>Recommandations</h2>
       <div className="movies">
-        <SearchResults loading={false} movies={movies} />
+        <SearchResults loading={loading} movies={movies} />
       </div>
     </div>
   );

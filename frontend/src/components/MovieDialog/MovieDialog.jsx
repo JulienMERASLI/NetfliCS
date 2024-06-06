@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import nprogress from 'nprogress';
 import axios from 'axios';
 import {
   API_KEY,
@@ -8,12 +7,12 @@ import {
 } from '../../pages/Home/Home';
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
+import { useLoading } from '../../Hook/useLoading';
 
 const DEFAULT_FORM_VALUES = {
   movie_id: 0,
   averageRating: 0,
   rating: 0,
-  status: 0,
   category: '',
 };
 
@@ -21,13 +20,7 @@ const useFetchMovie = (movieId, setRating, rating) => {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(null);
 
-  useEffect(() => {
-    if (loading) {
-      nprogress.start();
-    } else {
-      nprogress.done();
-    }
-  });
+  useLoading(loading);
 
   useEffect(() => {
     if (!movieId) {

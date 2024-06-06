@@ -39,7 +39,7 @@ router.post('/new', function (req, res, next) {
           password: hashedPassword,
           salt: salt,
         })
-        .then(function (user) {
+        .then(function () {
           res.redirect('http://localhost:3000/login');
         });
     }
