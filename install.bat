@@ -2,11 +2,14 @@
 @REM Setup the backend
 cd backend
 call npm install
-echo.> database.sqlite3
-call npm run migrate:run
-python -m venv venv
-venv\Scripts\activate.bat
-pip install -r requirements.txt
+@REM Copy the database file to the backend folder
+copy base_database.sqlite3 backend/
+call npm run migration:run
+call python -m venv venv
+
+call venv\Scripts\activate.bat
+
+call pip install -r requirements.txt
 cd ..
 
 @REM Setup the frontend
