@@ -5,13 +5,19 @@ import { createPortal } from 'react-dom';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { API_KEY, MovieSelectedContext, RatingContext } from '../Home/Home';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
+import { useLoading } from '../../Hook/useLoading';
 
 function MyList() {
   const [myList, setMyList] = useState([]);
   const [movieSelected, setMovieSelected] = useState(null);
   const [rating, setRating] = useState(0);
 
+  const [loading, setLoading] = useState(null);
+
+  useLoading(loading);
+
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/users/MyList`, {
         withCredentials: true,
@@ -27,6 +33,7 @@ function MyList() {
           })
         );
         setMyList(movies_list);
+        setLoading(false);
       });
   }, []);
 

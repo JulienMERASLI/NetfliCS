@@ -14,14 +14,14 @@ const Buttons = () => {
   );
 };
 
-export const SearchResults = ({ loading, movies }) => {
+export const SearchResults = ({ loading, movies, showButtons = false }) => {
   return (
     loading !== null &&
     (loading ? (
       <div className="replacementText">Chargement...</div>
     ) : movies.length > 0 ? (
       <>
-        <Buttons />
+        {showButtons && <Buttons />}
         <div id="movieList">
           {movies.map((movie) => (
             <Movie
@@ -33,7 +33,7 @@ export const SearchResults = ({ loading, movies }) => {
             />
           ))}
         </div>
-        <Buttons />
+        {showButtons && <Buttons />}
       </>
     ) : (
       <div className="replacementText">Aucun résultat</div>

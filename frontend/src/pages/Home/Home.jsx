@@ -99,7 +99,7 @@ function Home() {
               <FilterSearch />
             </>
           ) : (
-            <SearchResults loading={loading} movies={movies} />
+            <SearchResults loading={loading} movies={movies} showButtons />
           )}
         </div>
         {createPortal(<MovieDialog />, document.body)}
@@ -108,15 +108,11 @@ function Home() {
   );
 }
 // TODO: empecher le serveur de crash
+// TODO: style du loading
 // TODO: visuel des recommandations
-// TODO: Changer 'aucun résultat' en un texte plus clair
-// TODO: mettre loading pour les recommandations (en cours)
-// TODO: supprimer table movie (en cours)
-// TODO: colonne status
-// TODO: afficher la liste sur le profil (en cours)
 // TODO: améliorer le code
-// TODO: créer un script qui prépare tout le serveur
+// TODO: créer un script qui prépare tout le serveur (en cours)
 // TODO: faire le .env pour la prod et mettre les variables d'env dans le code
-// TODO: décider de la langue du texte sur le front
+// TODO: mettre tout en anglais
 
 export default Home;
