@@ -7,9 +7,9 @@ const Buttons = () => {
   return (
     <div className="buttonDiv">
       {page > 1 && (
-        <button onClick={() => setPage(page - 1)}>Page précédente</button>
+        <button onClick={() => setPage(page - 1)}>Previous page</button>
       )}
-      <button onClick={() => setPage(page + 1)}>Page suivante</button>
+      <button onClick={() => setPage(page + 1)}>Next page</button>
     </div>
   );
 };
@@ -18,7 +18,7 @@ export const SearchResults = ({ loading, movies, showButtons = false }) => {
   return (
     loading !== null &&
     (loading ? (
-      <div className="replacementText">Chargement...</div>
+      <div className="replacementText">Loading...</div>
     ) : movies.length > 0 ? (
       <>
         {showButtons && <Buttons />}
@@ -36,7 +36,9 @@ export const SearchResults = ({ loading, movies, showButtons = false }) => {
         {showButtons && <Buttons />}
       </>
     ) : (
-      <div className="replacementText">We don't have that movie but you might like:</div>
+      <div className="replacementText">
+        We don't have that movie but you might like:
+      </div>
     ))
   );
 };

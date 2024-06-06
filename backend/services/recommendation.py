@@ -16,7 +16,7 @@ cursor_movie_user = conn.execute("SELECT * FROM movie_user")
 list_movie_user = cursor_movie_user.fetchall()
 
 # Créer des DataFrames de données
-movie_user = pd.DataFrame(list_movie_user, columns=['movie_id', 'user_id', 'status', 'note'])
+movie_user = pd.DataFrame(list_movie_user, columns=['movie_id', 'user_id', 'note'])
 
 # Créer the movie_table pivot table
 movie_table = movie_user.pivot_table(index='user_id', columns='movie_id', values='note', fill_value=0)

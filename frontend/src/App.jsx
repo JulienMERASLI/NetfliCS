@@ -4,7 +4,6 @@ import MyList from './pages/MyList/MyList';
 import Layout from './components/Layout/Layout';
 import Auth from './pages/Auth/Auth';
 import Signup from './pages/Signup/Signup';
-import AddMovieForm from './pages/AddMovie/AddMovie';
 
 function App() {
   return (
@@ -14,7 +13,6 @@ function App() {
         <Route path="login" element={<Auth />} />
         <Route path="signup" element={<Signup />} />
         <Route path="MyList" element={<MyList />} />
-        <Route path="addMovie" element={<AddMovieForm />} />
         <Route path="*" element={<h1>404 - Not Found</h1>} />
       </Routes>
     </Layout>

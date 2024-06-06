@@ -40,6 +40,7 @@ function MyList() {
   return (
     <MovieSelectedContext.Provider value={[movieSelected, setMovieSelected]}>
       <RatingContext.Provider value={[rating, setRating]}>
+        <h1>My list</h1>
         <SearchResults loading={false} movies={myList} />
         {createPortal(<MovieDialog />, document.body)}
       </RatingContext.Provider>

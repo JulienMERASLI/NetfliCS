@@ -8,16 +8,21 @@ router.get('/:id', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ message: 'Non authentifié' });
   }
-  const movie = await appDataSource.getRepository(MovieUser).findOne({
-    select: {
-      note: true,
-    },
-    where: { movie_id: req.params.id, user_id: req.user.id },
-  });
-  if (movie === undefined) {
-    res.status(404).json({ message: 'Film non trouvé' });
-  } else {
-    res.status(200).json(movie);
+  try {
+    const movie = await appDataSource.getRepository(MovieUser).findOne({
+      select: {
+        note: true,
+      },
+      where: { movie_id: req.params.id, user_id: req.user.id },
+    });
+    if (movie === undefined) {
+      res.status(404).json({ message: 'Film non trouvé' });
+    } else {
+      res.status(200).json(movie);
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
@@ -37,15 +42,21 @@ router.post('/new', async (req, res) => {
   try {
     await movieUserRepository.save(newMovieUser);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     if (e.code === 'ER_DUP_ENTRY') {
       // Replace the rating and status if the user has already rated the movie
-      await movieUserRepository.update(
-        { movieId: req.body.movie_id, userId: req.user.id }, // condition
-        { rating: req.body.rating } // new values
-      );
+      try {
+        await movieUserRepository.update(
+          { movieId: req.body.movie_id, userId: req.user.id }, // condition
+          { rating: req.body.rating } // new values
+        );
+      } catch (err) {
+        console.error(err);
+
+        return res.status(500).json({ message: 'Internal server error' });
+      }
     } else {
-      return res.status(500).json({ message: 'Erreur 500' });
+      return res.status(500).json({ message: 'Internal server error' });
     }
   }
 });
