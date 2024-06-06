@@ -45,7 +45,6 @@ router.post('/new', async (req, res) => {
     movie_id: req.body.movie_id,
     user_id: req.user.id,
     note: req.body.rating,
-    status: req.body.status,
   });
   try {
     await movieUserRepository.save(newMovieUser);
@@ -55,7 +54,7 @@ router.post('/new', async (req, res) => {
       // Replace the rating and status if the user has already rated the movie
       await movieUserRepository.update(
         { movieId: req.body.movie_id, userId: req.user.id }, // condition
-        { rating: req.body.rating, status: req.body.status } // new values
+        { rating: req.body.rating } // new values
       );
     } else {
       return res.status(500).json({ message: 'Erreur 500' });

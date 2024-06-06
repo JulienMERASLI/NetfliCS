@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import nprogress from 'nprogress';
 import { API_KEY, usePage } from '../../pages/Home/Home';
 import './FilterSearch.css';
 import { SearchResults } from '../../SearchResults/SearchResults';
+import { useLoading } from '../../Hook/useLoading';
 
 const sortChoices = [
   { value: 'original_title', label: 'Titre original' },
@@ -17,17 +17,11 @@ const sortChoices = [
 
 const useFetchCategories = (currentCategories, sortBy, setMovies) => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
 
   const [page] = usePage();
 
-  useEffect(() => {
-    if (loading) {
-      nprogress.start();
-    } else {
-      nprogress.done();
-    }
-  });
+  useLoading(loading);
 
   useEffect(() => {
     setLoading(true);
