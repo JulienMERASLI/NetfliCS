@@ -11,3 +11,9 @@
 .users-loading-error {
   color: red;
 }
+.add-user-form {
+  padding: 3vw;
+}
+.inputDiv {
+  padding: 0.5em 0;
+}
