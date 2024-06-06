@@ -51,10 +51,14 @@ const useFetchMovie = (movieId, setRating, rating) => {
         form_movie.category = movie.genres?.map((g) => g.name).join(', ');
         form_movie.rating = rating;
 
-        axios
-          .post(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, form_movie, {
-            withCredentials: true,
-          })
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify(form_movie),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
           .finally(() => {
             axios
               .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${movieId}`, {

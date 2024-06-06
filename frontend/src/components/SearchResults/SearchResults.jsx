@@ -14,7 +14,12 @@ const Buttons = () => {
   );
 };
 
-export const SearchResults = ({ loading, movies, showButtons = false }) => {
+export const SearchResults = ({
+  loading,
+  movies,
+  showButtons = false,
+  className = '',
+}) => {
   return (
     loading !== null &&
     (loading ? (
@@ -22,7 +27,7 @@ export const SearchResults = ({ loading, movies, showButtons = false }) => {
     ) : movies.length > 0 ? (
       <>
         {showButtons && <Buttons />}
-        <div id="movieList">
+        <div id="movieList" className={className}>
           {movies.map((movie) => (
             <Movie
               key={movie.id}

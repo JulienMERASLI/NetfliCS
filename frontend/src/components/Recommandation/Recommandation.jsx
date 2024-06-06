@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { API_KEY, RatingContext } from '../../pages/Home/Home';
 import { useLoading } from '../../Hook/useLoading';
+import './Recommandation.css';
 
 export const useFetchRecommended = (rating) => {
   const [movies, setMovies] = useState([]);
@@ -28,7 +29,7 @@ export const useFetchRecommended = (rating) => {
         setMovies(movies_recommended);
         setLoading(false);
       });
-  }, [rating]);
+  }, []);
 
   return { movies, loading };
 };
@@ -41,7 +42,11 @@ export const Recommandation = () => {
     <div>
       <h2>Recommendations</h2>
       <div className="movies">
-        <SearchResults loading={loading} movies={movies} />
+        <SearchResults
+          loading={loading}
+          movies={movies}
+          className="recommendations"
+        />
       </div>
     </div>
   );

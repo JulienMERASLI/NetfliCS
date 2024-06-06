@@ -47,7 +47,7 @@ router.post('/new', async (req, res) => {
       // Replace the rating and status if the user has already rated the movie
       try {
         await movieUserRepository.update(
-          { movieId: req.body.movie_id, userId: req.user.id }, // condition
+          { movie_id: req.body.movie_id, user_id: req.user.id }, // condition
           { rating: req.body.rating } // new values
         );
       } catch (err) {

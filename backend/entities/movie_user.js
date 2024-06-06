@@ -15,14 +15,6 @@ const MovieUser = new typeorm.EntitySchema({
       type: Number,
     },
   },
-  relations: {
-    user: {
-      target: 'User',
-      type: 'many-to-one',
-      joinColumn: true,
-      onDelete: 'CASCADE',
-    },
-  },
 });
 
 export default MovieUser;
