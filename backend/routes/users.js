@@ -1,8 +1,10 @@
 import express from 'express';
 import crypto from 'crypto';
+import axios from 'axios';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 import MovieUser from '../entities/movie_user.js';
+import Movie from '../entities/movie.js';
 
 const router = express.Router();
 
@@ -41,18 +43,24 @@ router.post('/new', function (req, res, next) {
   );
 });
 
-router.get('/MyList', function (req, res) {
+router.get('/MyList', async function (req, res) {
   if (!req.user) {
     return res.status(401).json({ message: 'Unauthorized' });
   } else {
+    const user = await appDataSource.getRepository(User).findOne({
+      where: { id: req.user.id },
+    });
     appDataSource
-      .getRepository(MovieUser)
+      .getRepository(Movie, MovieUser)
       .find({
-        select: { movie_id: true },
-        where: { user_id: req.user.id },
+        where: { user: user },
       })
-      .then(function (movies) {
-        res.json({ movies: movies });
+      .then(async (movies) => {
+        const query = req.headers.search;
+
+        console.log('movie_ids: ', movies);
+
+        res.json({ movies: movie_ids });
       })
       .catch((e) => {
         console.error(e);

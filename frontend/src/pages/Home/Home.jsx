@@ -117,6 +117,8 @@ function Home() {
 // TODO: afficher sur le front les erreurs du back
 // TODO: Afficher pas de recommandation si python crash
 // TODO: validation formulaires serveur
+// TODO: Go back sur les popup
+// TODO: Envoyer la page en query
 // TODO: Changer de page pour les filtres
 
 export default Home;

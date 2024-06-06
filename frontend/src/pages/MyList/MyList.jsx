@@ -11,7 +11,7 @@ function MyList() {
   const [myList, setMyList] = useState([]);
   const [movieSelected, setMovieSelected] = useState(null);
   const [rating, setRating] = useState(0);
-
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(null);
 
   useLoading(loading);
@@ -21,6 +21,7 @@ function MyList() {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/users/MyList`, {
         withCredentials: true,
+        headers: { search: search },
       })
       .then(async (response) => {
         const movies_list = await Promise.all(
@@ -35,12 +36,19 @@ function MyList() {
         setMyList(movies_list);
         setLoading(false);
       });
-  }, []);
+  }, [search]);
 
   return (
     <MovieSelectedContext.Provider value={[movieSelected, setMovieSelected]}>
       <RatingContext.Provider value={[rating, setRating]}>
         <h1>My list</h1>
+        <input
+          id="search"
+          placeholder="Rechercher..."
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <SearchResults loading={false} movies={myList} />
         {createPortal(<MovieDialog />, document.body)}
       </RatingContext.Provider>

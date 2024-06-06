@@ -1,0 +1,9 @@
+#search {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  background-color: #0e0912;
+  color: white;
+  border: none;
+}

@@ -11,6 +11,7 @@ import { useLoading } from '../../Hook/useLoading';
 
 const DEFAULT_FORM_VALUES = {
   movie_id: 0,
+  movie_name: '',
   rating: 0,
 };
 
@@ -46,6 +47,8 @@ const useFetchMovie = (movieId, setRating, rating) => {
         const form_movie = DEFAULT_FORM_VALUES;
         form_movie.movie_id = movieId;
         form_movie.rating = rating;
+        form_movie.movie_name = movie.title;
+        console.log(form_movie);
 
         fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
           method: 'POST',
@@ -73,7 +76,15 @@ const useFetchMovie = (movieId, setRating, rating) => {
         setRating(0);
       }
     }
-  }, [setRating, rating, movieId, loading, movie.vote_average, movie.genres]);
+  }, [
+    setRating,
+    rating,
+    movieId,
+    loading,
+    movie.vote_average,
+    movie.genres,
+    movie.title,
+  ]);
 
   return { movie, loading };
 };

@@ -46,7 +46,7 @@ passport.use(
     cb
   ) {
     appDataSource
-      .getRepository('User')
+      .getRepository('Users')
       .findOne({ where: { email: email } })
       .then((user) => {
         if (!user) {
