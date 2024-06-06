@@ -87,7 +87,7 @@ function Home() {
           <div id="searchDiv">
             <input
               id="search"
-              placeholder="Rechercher..."
+              placeholder="Search..."
               type="text"
               value={movieName}
               onChange={(e) => setMovieName(e.target.value)}

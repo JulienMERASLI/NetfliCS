@@ -6,13 +6,13 @@ import { SearchResults } from '../SearchResults/SearchResults';
 import { useLoading } from '../../Hook/useLoading';
 
 const sortChoices = [
-  { value: 'original_title', label: 'Titre original' },
-  { value: 'popularity', label: 'Popularité' },
-  { value: 'revenue', label: 'Revenus' },
-  { value: 'primary_release_date', label: 'Date de sortie' },
-  { value: 'title', label: 'Titre' },
-  { value: 'vote_average', label: 'Note moyenne' },
-  { value: 'vote_count', label: 'Nombre de votes' },
+  { value: 'original_title', label: 'Original title' },
+  { value: 'popularity', label: 'Popularity' },
+  { value: 'revenue', label: 'Revenue' },
+  { value: 'primary_release_date', label: 'Primary release date' },
+  { value: 'title', label: 'Title' },
+  { value: 'vote_average', label: 'Vote average' },
+  { value: 'vote_count', label: 'Vote count' },
 ];
 
 const useFetchCategories = (currentCategories, sortBy, setMovies) => {
@@ -79,7 +79,7 @@ export const FilterSearch = () => {
   return (
     <div className="global">
       <div className="filters">
-        <h2>Filtres</h2>
+        <h2>Filters</h2>
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           {sortChoices.map((choice) => (
             <option key={choice.value} value={choice.value}>

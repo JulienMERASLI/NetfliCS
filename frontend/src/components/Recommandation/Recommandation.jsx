@@ -39,7 +39,7 @@ export const Recommandation = () => {
 
   return (
     <div>
-      <h2>Recommandations</h2>
+      <h2>Recommendations</h2>
       <div className="movies">
         <SearchResults loading={loading} movies={movies} />
       </div>
