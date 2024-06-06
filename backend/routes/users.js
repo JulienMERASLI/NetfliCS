@@ -1,9 +1,9 @@
 import express from 'express';
 import crypto from 'crypto';
+import { Like } from 'typeorm';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 import MovieUser from '../entities/movie_user.js';
-import Movie from '../entities/movies.js';
 
 const router = express.Router();
 
@@ -50,16 +50,23 @@ router.get('/MyList', async function (req, res) {
       where: { id: req.user.id },
     });
     appDataSource
-      .getRepository(Movie, MovieUser)
+      .getRepository(MovieUser)
       .find({
-        where: { user: user },
+        relations: {
+          movie: true,
+          user: true,
+        },
+        where: {
+          user: user,
+          movie: {
+            movie_name: req.query.search
+              ? Like('%' + req.query.search + '%')
+              : undefined,
+          },
+        },
       })
       .then(async (movies) => {
-        const query = req.headers.search;
-
-        console.log('movie_ids: ', movies);
-
-        res.json({ movies: movie_ids });
+        res.json({ movies: movies });
       })
       .catch((e) => {
         console.error(e);

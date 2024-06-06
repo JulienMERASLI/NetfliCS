@@ -6,6 +6,7 @@ import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { API_KEY, MovieSelectedContext, RatingContext } from '../Home/Home';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
 import { useLoading } from '../../Hook/useLoading';
+import { useConnection } from '../../Hook/useConnection';
 
 function MyList() {
   const [myList, setMyList] = useState([]);
@@ -14,18 +15,23 @@ function MyList() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(null);
 
+  useConnection();
   useLoading(loading);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/users/MyList`, {
-        withCredentials: true,
-        headers: { search: search },
-      })
+      .get(
+        `${import.meta.env.VITE_BACKEND_URL}/users/MyList?${
+          search !== '' ? `search=${search}` : ''
+        }`,
+        {
+          withCredentials: true,
+        }
+      )
       .then(async (response) => {
         const movies_list = await Promise.all(
-          response.data.movies.map((movie) => {
+          response.data.movies.map(({ movie }) => {
             return axios
               .get(`https://api.themoviedb.org/3/movie/${movie.movie_id}`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },

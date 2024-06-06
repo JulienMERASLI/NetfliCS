@@ -29,8 +29,6 @@ router.get('/:id', async (req, res) => {
       },
       where: { movie: movie_db, user: user },
     });
-    console.log('Movie: ', movie_db);
-    console.log('id: ', movie);
     if (movie === undefined) {
       res.status(404).json({ message: 'Film non trouvé' });
     } else {
@@ -68,16 +66,13 @@ router.post('/new', async (req, res) => {
       const exists = await movieUserRepository.findOne({
         where: { movie: movie, user: user },
       });
-      console.log('Exists: ', exists);
       if (exists !== null) {
-        console.log('Updating movieUser');
         await movieUserRepository.update(
           { movie: movie, user: user },
           { note: req.body.rating }
         );
         res.status(201).json({ message: 'Note mise à jour' });
       } else {
-        console.log('Saving movieUser', req.body.rating);
         await movieUserRepository.save({
           movie: movie,
           user: user,

@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDebounce } from 'use-debounce';
-import useFetchConnected from '../../Hook/useFetchConnected';
 import './Home.css';
 import 'nprogress/nprogress.css';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
@@ -11,6 +10,7 @@ import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { Recommandation } from '../../components/Recommandation/Recommandation';
 import { FilterSearch } from '../../components/FilterSearch/FilterSearch';
 import { useLoading } from '../../Hook/useLoading';
+import { useConnection } from '../../Hook/useConnection';
 
 export const API_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo';
@@ -65,15 +65,8 @@ export const MovieSelectedContext = createContext([]);
 export const RatingContext = createContext([]);
 
 function Home() {
-  const { connected } = useFetchConnected();
-  const [page, setPage] = usePage();
-
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (connected !== null && !connected) {
-      navigate('/login');
-    }
-  }, [connected, navigate]);
+  const [, setPage] = usePage();
+  useConnection();
 
   const [movieName, setMovieName] = useState('');
   const [debouncedMovieName] = useDebounce(movieName, 300);
@@ -82,6 +75,11 @@ function Home() {
 
   const [movieSelected, setMovieSelected] = useState(null);
   const [rating, setRating] = useState(0);
+
+  useEffect(() => {
+    setPage(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movieName]);
 
   return (
     <MovieSelectedContext.Provider value={[movieSelected, setMovieSelected]}>

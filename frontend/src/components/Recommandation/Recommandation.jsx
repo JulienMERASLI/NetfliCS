@@ -12,7 +12,6 @@ export const useFetchRecommended = (rating) => {
   useLoading(loading);
 
   useEffect(() => {
-    console.log('fetching recommended');
     setLoading(true);
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/recommended`, {

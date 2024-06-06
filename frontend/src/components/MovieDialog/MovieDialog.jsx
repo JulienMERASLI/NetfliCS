@@ -50,7 +50,6 @@ const useFetchMovie = (movieId, setRating, rating) => {
         form_movie.movie_id = movieId;
         form_movie.rating = rating;
         form_movie.movie_name = movie.title;
-        console.log(rating);
 
         fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
           method: 'POST',
@@ -99,8 +98,6 @@ export const MovieDialog = () => {
   const [hover, setHover] = useState(null);
   const [totalStars] = useState(10);
   const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
-
-  console.log({ movieSelectedId, rating });
 
   useEffect(() => {
     if (movieSelectedId) {
