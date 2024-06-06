@@ -35,7 +35,7 @@ export const useFetchRecommended = (rating) => {
 
 export const Recommandation = () => {
   const [rating, setRating] = useContext(RatingContext);
-  const { movies, loading } = useFetchRecommended(0);
+  const { movies, loading } = useFetchRecommended(rating);
 
   return (
     <div>
