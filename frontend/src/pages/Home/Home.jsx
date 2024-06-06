@@ -107,12 +107,11 @@ function Home() {
     </MovieSelectedContext.Provider>
   );
 }
-// TODO: empecher le serveur de crash
 // TODO: style du loading
 // TODO: visuel des recommandations
 // TODO: améliorer le code
-// TODO: créer un script qui prépare tout le serveur (en cours)
-// TODO: faire le .env pour la prod et mettre les variables d'env dans le code
-// TODO: mettre tout en anglais
+// TODO: faire le .env pour la prod
+// TODO: mettre les variables d'env dans le code
+// TODO: afficher sur le front les erreurs du back
 
 export default Home;

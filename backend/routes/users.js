@@ -41,6 +41,10 @@ router.post('/new', function (req, res, next) {
         })
         .then(function () {
           res.redirect('http://localhost:3000/login');
+        })
+        .catch((e) => {
+          console.error(e);
+          res.redirect('http://localhost:3000/signup');
         });
     }
   );
@@ -70,6 +74,10 @@ router.get('/MyList', function (req, res) {
       })
       .then(function (movies) {
         res.json({ movies: movies });
+      })
+      .catch((e) => {
+        console.error(e);
+        res.status(500).json({ message: 'Internal server error' });
       });
   }
 });

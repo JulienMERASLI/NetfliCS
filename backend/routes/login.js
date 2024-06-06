@@ -73,6 +73,9 @@ passport.use(
             return cb(null, user);
           }
         );
+      })
+      .catch((err) => {
+        return cb(err);
       });
   })
 );
