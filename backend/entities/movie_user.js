@@ -11,9 +11,6 @@ const MovieUser = new typeorm.EntitySchema({
       primary: true,
       type: Number,
     },
-    status: {
-      type: Number,
-    },
     note: {
       type: Number,
     },

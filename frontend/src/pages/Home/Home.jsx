@@ -60,6 +60,7 @@ const useFetchMovies = (movieName) => {
   return { movies, loading };
 };
 export const MovieSelectedContext = createContext([]);
+export const RatingContext = createContext([]);
 
 function Home() {
   const { connected } = useFetchConnected();
@@ -77,29 +78,32 @@ function Home() {
   const { movies, loading } = useFetchMovies(debouncedMovieName);
 
   const [movieSelected, setMovieSelected] = useState(null);
+  const [rating, setRating] = useState(0);
 
   return (
     <MovieSelectedContext.Provider value={[movieSelected, setMovieSelected]}>
-      <div className="App">
-        <div id="searchDiv">
-          <input
-            id="search"
-            placeholder="Rechercher..."
-            type="text"
-            value={movieName}
-            onChange={(e) => setMovieName(e.target.value)}
-          />
+      <RatingContext.Provider value={[rating, setRating]}>
+        <div className="App">
+          <div id="searchDiv">
+            <input
+              id="search"
+              placeholder="Rechercher..."
+              type="text"
+              value={movieName}
+              onChange={(e) => setMovieName(e.target.value)}
+            />
+          </div>
+          {debouncedMovieName === '' ? (
+            <>
+              <Recommandation />
+              <FilterSearch />
+            </>
+          ) : (
+            <SearchResults loading={loading} movies={movies} />
+          )}
         </div>
-        {debouncedMovieName === '' ? (
-          <>
-            <Recommandation />
-            <FilterSearch />
-          </>
-        ) : (
-          <SearchResults loading={loading} movies={movies} />
-        )}
-      </div>
-      {createPortal(<MovieDialog />, document.body)}
+        {createPortal(<MovieDialog />, document.body)}
+      </RatingContext.Provider>
     </MovieSelectedContext.Provider>
   );
 }

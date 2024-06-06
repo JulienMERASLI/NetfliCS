@@ -39,9 +39,7 @@ router.post('/new', function (req, res, next) {
           salt: salt,
         })
         .then(function (user) {
-          req.login(user, function () {
-            res.redirect('http://localhost:3000/');
-          });
+          res.redirect('http://localhost:3000/login');
         });
     }
   );

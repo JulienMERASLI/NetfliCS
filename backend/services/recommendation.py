@@ -47,7 +47,8 @@ user_ids = movie_table.index
 movie_ids = movie_table.columns
 
 target_user_index = user_ids.get_loc(user_id)
-top_highest_rated_movies = np.argsort(user_prediction[target_user_index])[movie_matrix_orig[target_user_index] == 0][-20:][::-1]
+top_highest_rated_movies = np.argsort(user_prediction[target_user_index])
+top_highest_rated_movies = np.setdiff1d(top_highest_rated_movies, np.nonzero(movie_matrix_orig[target_user_index]))[-20:][::-1]
     
 top_movies = [movie_ids[movie_index] for movie_index in top_highest_rated_movies]
 print(top_movies)

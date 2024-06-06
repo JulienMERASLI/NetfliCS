@@ -34,13 +34,7 @@ router.post('/new', async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ message: 'Non authentifié' });
   }
-  const movieRepository = appDataSource.getRepository(Movie);
   const movieUserRepository = appDataSource.getRepository(MovieUser);
-  const newMovie = movieRepository.create({
-    id: req.body.movie_id,
-    averageRating: req.body.averageRating,
-    category: req.body.category,
-  });
   const newMovieUser = movieUserRepository.create({
     movie_id: req.body.movie_id,
     user_id: req.user.id,
@@ -59,16 +53,6 @@ router.post('/new', async (req, res) => {
     } else {
       return res.status(500).json({ message: 'Erreur 500' });
     }
-  }
-  try {
-    await movieRepository.save(newMovie);
-  } catch (e) {
-    if (e.code !== 'ER_DUP_ENTRY') {
-      console.log(e);
-      res.status(500).json({ message: 'Erreur 500' });
-    }
-  } finally {
-    res.status(201).json({ message: 'Film créé' });
   }
 });
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SearchResults } from '../../SearchResults/SearchResults';
-import { API_KEY } from '../../pages/Home/Home';
+import { API_KEY, RatingContext } from '../../pages/Home/Home';
 import { useLoading } from '../../Hook/useLoading';
 
 export const useFetchRecommended = (rating) => {
@@ -34,6 +34,7 @@ export const useFetchRecommended = (rating) => {
 };
 
 export const Recommandation = () => {
+  const [rating, setRating] = useContext(RatingContext);
   const { movies, loading } = useFetchRecommended(0);
 
   return (

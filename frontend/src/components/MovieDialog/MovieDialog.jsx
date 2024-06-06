@@ -1,6 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { API_KEY, MovieSelectedContext } from '../../pages/Home/Home';
+import {
+  API_KEY,
+  MovieSelectedContext,
+  RatingContext,
+} from '../../pages/Home/Home';
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
 import { useLoading } from '../../Hook/useLoading';
@@ -78,7 +82,7 @@ export const MovieDialog = () => {
   const [movieSelectedId, setMovieSelectedId] =
     useContext(MovieSelectedContext);
   const dialog = useRef(null);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useContext(RatingContext);
   const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
 
   useEffect(() => {
