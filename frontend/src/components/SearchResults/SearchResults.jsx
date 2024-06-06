@@ -1,5 +1,5 @@
-import { Movie } from '../components/Movie/Movie';
-import { usePage } from '../pages/Home/Home';
+import { Movie } from '../Movie/Movie';
+import { usePage } from '../../pages/Home/Home';
 
 const Buttons = () => {
   const [page, setPage] = usePage();

@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
+import MovieUser from '../entities/movie_user.js';
 
 const router = express.Router();
 
@@ -55,6 +56,22 @@ router.delete('/:userId', function (req, res) {
     .catch(function () {
       res.status(500).json({ message: 'Error while deleting the user' });
     });
+});
+
+router.get('/MyList', function (req, res) {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  } else {
+    appDataSource
+      .getRepository(MovieUser)
+      .find({
+        select: { movie_id: true },
+        where: { user_id: req.user.id },
+      })
+      .then(function (movies) {
+        res.json({ movies: movies });
+      });
+  }
 });
 
 export default router;

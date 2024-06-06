@@ -8,7 +8,6 @@ import {
 } from '../../pages/Home/Home';
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
-import { useFetchRecommended } from '../Recommandation/Recommandation';
 
 const DEFAULT_FORM_VALUES = {
   movie_id: 0,

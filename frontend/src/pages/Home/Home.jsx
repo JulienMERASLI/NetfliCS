@@ -8,7 +8,7 @@ import useFetchConnected from '../../Hook/useFetchConnected';
 import './Home.css';
 import 'nprogress/nprogress.css';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
-import { SearchResults } from '../../SearchResults/SearchResults';
+import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { Recommandation } from '../../components/Recommandation/Recommandation';
 import { FilterSearch } from '../../components/FilterSearch/FilterSearch';
 

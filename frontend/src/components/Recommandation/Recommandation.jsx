@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { SearchResults } from '../../SearchResults/SearchResults';
+import { SearchResults } from '../SearchResults/SearchResults';
 import { API_KEY, RatingContext } from '../../pages/Home/Home';
 
 export const useFetchRecommended = (rating) => {

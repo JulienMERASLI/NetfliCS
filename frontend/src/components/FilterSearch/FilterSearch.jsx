@@ -3,7 +3,7 @@ import axios from 'axios';
 import nprogress from 'nprogress';
 import { API_KEY, usePage } from '../../pages/Home/Home';
 import './FilterSearch.css';
-import { SearchResults } from '../../SearchResults/SearchResults';
+import { SearchResults } from '../SearchResults/SearchResults';
 
 const sortChoices = [
   { value: 'original_title', label: 'Titre original' },
