@@ -46,18 +46,6 @@ router.post('/new', function (req, res, next) {
   );
 });
 
-router.delete('/:userId', function (req, res) {
-  appDataSource
-    .getRepository(User)
-    .delete({ id: req.params.userId })
-    .then(function () {
-      res.status(204).json({ message: 'User successfully deleted' });
-    })
-    .catch(function () {
-      res.status(500).json({ message: 'Error while deleting the user' });
-    });
-});
-
 router.get('/MyList', function (req, res) {
   if (!req.user) {
     return res.status(401).json({ message: 'Unauthorized' });
