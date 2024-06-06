@@ -56,10 +56,12 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
       })
       .then((response) => {
         setMovies(response.data.results);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [currentCategories, sortBy, setMovies, page]);
 

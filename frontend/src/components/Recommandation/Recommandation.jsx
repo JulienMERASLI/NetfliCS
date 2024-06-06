@@ -29,6 +29,8 @@ export const useFetchRecommended = (rating) => {
           })
         );
         setMovies(movies_recommended);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);

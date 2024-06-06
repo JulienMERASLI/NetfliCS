@@ -1,10 +1,9 @@
 import express from 'express';
 import crypto from 'crypto';
-import axios from 'axios';
 import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 import MovieUser from '../entities/movie_user.js';
-import Movie from '../entities/movie.js';
+import Movie from '../entities/movies.js';
 
 const router = express.Router();
 

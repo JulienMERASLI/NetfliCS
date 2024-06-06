@@ -50,10 +50,12 @@ const useFetchMovies = (movieName) => {
       )
       .then((response) => {
         setMovies(response.data.results);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [movieName, page]);
 

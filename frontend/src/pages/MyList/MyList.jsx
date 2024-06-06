@@ -34,6 +34,8 @@ function MyList() {
           })
         );
         setMyList(movies_list);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, [search]);

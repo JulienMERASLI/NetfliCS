@@ -34,10 +34,12 @@ const useFetchMovie = (movieId, setRating, rating) => {
       })
       .then((response) => {
         setMovie(response.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [movieId, setRating]);
 
@@ -48,7 +50,7 @@ const useFetchMovie = (movieId, setRating, rating) => {
         form_movie.movie_id = movieId;
         form_movie.rating = rating;
         form_movie.movie_name = movie.title;
-        console.log(form_movie);
+        console.log(rating);
 
         fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
           method: 'POST',
@@ -64,8 +66,8 @@ const useFetchMovie = (movieId, setRating, rating) => {
                 withCredentials: true,
               })
               .then((res) => {
-                if (res.data && res.data.note) {
-                  setRating(res.data.note);
+                if (res.data && res.data.length && res.data.length === 1) {
+                  setRating(res.data[0].note);
                 }
               });
           })
@@ -97,6 +99,8 @@ export const MovieDialog = () => {
   const [hover, setHover] = useState(null);
   const [totalStars] = useState(10);
   const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
+
+  console.log({ movieSelectedId, rating });
 
   useEffect(() => {
     if (movieSelectedId) {

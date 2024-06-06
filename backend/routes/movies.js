@@ -14,18 +14,23 @@ router.get('/:id', async (req, res) => {
     return res.status(400).json({ message: 'Requête invalide' });
   }
   try {
+    const movie_id = req.params.id;
     const movieRepository = appDataSource.getRepository(Movies);
     const userRepository = appDataSource.getRepository(Users);
-    const user = userRepository.findOne({ where: { id: req.user.id } });
-    const movie_db = movieRepository.findOne({
-      where: { movie_id: req.body.movie_id },
+    const user = await userRepository.findOne({ where: { id: req.user.id } });
+    const movie_db = await movieRepository.findOne({
+      where: { movie_id: movie_id },
     });
     const movie = await appDataSource.getRepository(MovieUser).find({
-      select: ['note'],
+      select: ['note', 'id'],
+      relations: {
+        movie: true,
+        user: true,
+      },
       where: { movie: movie_db, user: user },
     });
     console.log('Movie: ', movie_db);
-    console.log('id: ', req.body.movie_id);
+    console.log('id: ', movie);
     if (movie === undefined) {
       res.status(404).json({ message: 'Film non trouvé' });
     } else {
@@ -48,41 +53,39 @@ router.post('/new', async (req, res) => {
   const movieRepository = appDataSource.getRepository(Movies);
 
   try {
-    movieRepository
-      .save({
-        movie_id: req.body.movie_id,
-        movie_name: req.body.movie_name,
-      })
-      .then(async () => {
-        const userRepository = appDataSource.getRepository(Users);
-        const user = await userRepository.findOne({
-          where: { id: req.user.id },
-        });
-        const movie = await movieRepository.findOne({
-          where: { movie_id: req.body.movie_id },
-        });
-        if (movie !== undefined) {
-          const exists = await movieUserRepository.findOne({
-            where: { movie: movie, user: user },
-          });
-          console.log('Exists: ', exists);
-          if (exists !== null) {
-            console.log('Updating movieUser');
-            movieUserRepository.update(
-              { movie: movie, user: user },
-              { note: req.body.rating }
-            );
-          } else {
-            console.log('Saving movieUser');
-            movieUserRepository.save({
-              movie: movie,
-              user: user,
-              note: req.body.rating,
-            });
-            res.status(201).json({ message: 'Note créée' });
-          }
-        }
+    await movieRepository.save({
+      movie_id: req.body.movie_id,
+      movie_name: req.body.movie_name,
+    });
+    const userRepository = appDataSource.getRepository(Users);
+    const user = await userRepository.findOne({
+      where: { id: req.user.id },
+    });
+    const movie = await movieRepository.findOne({
+      where: { movie_id: req.body.movie_id },
+    });
+    if (movie !== undefined) {
+      const exists = await movieUserRepository.findOne({
+        where: { movie: movie, user: user },
       });
+      console.log('Exists: ', exists);
+      if (exists !== null) {
+        console.log('Updating movieUser');
+        await movieUserRepository.update(
+          { movie: movie, user: user },
+          { note: req.body.rating }
+        );
+        res.status(201).json({ message: 'Note mise à jour' });
+      } else {
+        console.log('Saving movieUser', req.body.rating);
+        await movieUserRepository.save({
+          movie: movie,
+          user: user,
+          note: req.body.rating,
+        });
+        res.status(201).json({ message: 'Note créée' });
+      }
+    }
   } catch (e) {
     console.error(e);
     res.status(500).json({ message: 'Internal server error' });
