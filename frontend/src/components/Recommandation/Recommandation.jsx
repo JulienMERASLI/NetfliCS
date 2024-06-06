@@ -2,10 +2,12 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SearchResults } from '../../SearchResults/SearchResults';
 import { API_KEY } from '../../pages/Home/Home';
-export const Recommandation = () => {
+
+export const useFetchRecommended = (rating) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
+    console.log('fetching recommended');
     axios
       .get('http://localhost:8000/recommended', { withCredentials: true })
       .then(async (response) => {
@@ -20,7 +22,13 @@ export const Recommandation = () => {
         );
         setMovies(movies_recommended);
       });
-  }, []);
+  }, [rating]);
+
+  return { movies };
+};
+
+export const Recommandation = () => {
+  const { movies } = useFetchRecommended(0);
 
   return (
     <div>

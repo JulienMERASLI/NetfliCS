@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_KEY, MovieSelectedContext } from '../../pages/Home/Home';
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
+import { useFetchRecommended } from '../Recommandation/Recommandation';
 
 const DEFAULT_FORM_VALUES = {
   movie_id: 0,
@@ -44,37 +45,6 @@ const useFetchMovie = (movieId, setRating, rating) => {
         console.log(error);
       });
   }, [movieId, setRating]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${movie.id}`, {
-  //       withCredentials: true,
-  //     })
-  //     .then((res) => {
-  //       if (res.data.note) {
-  //         setRating(res.data.note);
-  //       }
-  //       if (movie.id !== undefined) {
-  //         const form_movie = DEFAULT_FORM_VALUES;
-  //         form_movie.movie_id = movie.id;
-  //         form_movie.averageRating = movie.vote_average;
-  //         form_movie.category = movie.genres?.map((g) => g.name).join(', ');
-  //         form_movie.rating = rating;
-
-  //         axios
-  //           .post(
-  //             `${import.meta.env.VITE_BACKEND_URL}/movies/new`,
-  //             form_movie,
-  //             {
-  //               withCredentials: true,
-  //             }
-  //           )
-  //           .catch((error) => {
-  //             console.error(error);
-  //           });
-  //       }
-  //     });
-  // }, [movie, setRating, rating]);
 
   useEffect(() => {
     if (loading === false) {

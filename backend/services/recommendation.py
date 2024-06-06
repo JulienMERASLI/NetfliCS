@@ -11,19 +11,11 @@ user_id = argparser.parse_args().user
 # Connexion à la base de données
 conn = sqlite3.connect('database.sqlite3')
 
-# Fetch des données de la base de données
-cursor_movie = conn.execute("SELECT * FROM movie")
-list_movie = cursor_movie.fetchall()
-
-cursor_user = conn.execute("SELECT * FROM user")
-list_user = cursor_user.fetchall()
-
+# Récupérer les données de la table movie_user
 cursor_movie_user = conn.execute("SELECT * FROM movie_user")
 list_movie_user = cursor_movie_user.fetchall()
 
 # Créer des DataFrames de données
-movie = pd.DataFrame(list_movie, columns=['id', 'averageRating', 'category'])
-user = pd.DataFrame(list_user, columns=['id', 'email', 'pseudo', 'birthdate', 'password', 'salt'])
 movie_user = pd.DataFrame(list_movie_user, columns=['movie_id', 'user_id', 'status', 'note'])
 
 # Créer the movie_table pivot table
@@ -32,6 +24,7 @@ movie_matrix = movie_table.values.astype(np.float32)
 
 
 mean_user_rating = np.true_divide(movie_matrix.sum(1), (movie_matrix != 0).sum(1))
+movie_matrix_orig = movie_matrix.copy()
 movie_matrix[movie_matrix == 0] = np.tile(mean_user_rating, (movie_matrix.shape[1], 1)).T[movie_matrix == 0]
 
 # Calculer la similarité entre les utilisateurs (Pearson)
@@ -53,17 +46,8 @@ top_highest_rated_movies = np.argsort(user_prediction, axis=1)[:, -20:][:, ::-1]
 user_ids = movie_table.index
 movie_ids = movie_table.columns
 
-
-top_highest_rated_movie_ids = []
-for user_top_movies in top_highest_rated_movies:
-    user_top_movie_ids = [movie_ids[movie_index] for movie_index in user_top_movies]
-    top_highest_rated_movie_ids.append(user_top_movie_ids)
-
-def top_highest_rated_movie_ids_for_user(user_id):
-    target_user_index = user_ids.get_loc(user_id)
-    top_highest_rated_movies_for_user = top_highest_rated_movie_ids[target_user_index]
+target_user_index = user_ids.get_loc(user_id)
+top_highest_rated_movies = np.argsort(user_prediction[target_user_index])[movie_matrix_orig[target_user_index] == 0][-20:][::-1]
     
-    return top_highest_rated_movies_for_user
-    
-
-print(top_highest_rated_movie_ids_for_user(user_id))
+top_movies = [movie_ids[movie_index] for movie_index in top_highest_rated_movies]
+print(top_movies)
