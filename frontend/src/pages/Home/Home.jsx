@@ -87,7 +87,7 @@ function Home() {
           <div id="searchDiv">
             <input
               id="search"
-              placeholder="Search..."
+              placeholder="Rechercher..."
               type="text"
               value={movieName}
               onChange={(e) => setMovieName(e.target.value)}
@@ -113,5 +113,6 @@ function Home() {
 // TODO: faire le .env pour la prod
 // TODO: mettre les variables d'env dans le code
 // TODO: afficher sur le front les erreurs du back
+// TODO: validation formulaires serveur
 
 export default Home;

@@ -36,7 +36,9 @@ export const SearchResults = ({ loading, movies, showButtons = false }) => {
         {showButtons && <Buttons />}
       </>
     ) : (
-      <div className="replacementText">We don't have that movie but you might like:</div>
+      <div className="replacementText">
+        We don't have that movie but you might like:
+      </div>
     ))
   );
 };

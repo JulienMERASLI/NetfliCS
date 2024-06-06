@@ -124,26 +124,26 @@ export const MovieDialog = () => {
       <div className="container">
         {movieSelectedId &&
           (loading ? (
-            <div className="replacementText">Chargement...</div>
+            <div className="replacementText">Loading...</div>
           ) : (
             <>
               <div className="titleDiv">
-                <h2 className="dialogTitle">Détails de {movie.title}</h2>
+                <h2 className="dialogTitle">Details of {movie.title}</h2>
                 <TmdbImage src={movie.poster_path} alt={movie.title} />
               </div>
               <p>
-                <span className="category">Date de sortie:</span>{' '}
+                <span className="category">Release date:</span>{' '}
                 {movie.release_date}
               </p>
               <p>
-                <span className="category">Résumé:</span> {movie.overview}
+                <span className="category">Summary:</span> {movie.overview}
               </p>
               <p>
-                <span className="category">Note moyenne:</span>{' '}
+                <span className="category">Average rating:</span>{' '}
                 {movie.vote_average} / 10
               </p>
               <p>
-                <span className="rating">Note :</span>{' '}
+                <span className="rating">Rating :</span>{' '}
                 <input
                   className="rating_input"
                   type="number"
