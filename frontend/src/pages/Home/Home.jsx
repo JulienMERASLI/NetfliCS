@@ -112,5 +112,6 @@ function Home() {
 // TODO: faire le .env pour la prod
 // TODO: afficher sur le front les erreurs du back
 // TODO: validation formulaires serveur
+// TODO: Etoiles aux lieu de notes
 
 export default Home;

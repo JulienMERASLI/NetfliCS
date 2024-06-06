@@ -3,7 +3,7 @@
 cd backend
 call npm install
 @REM Copy the database file to the backend folder
-copy base_database.sqlite3 backend/
+copy base_database.sqlite3 backend/database.sqlite3
 call npm run migration:run
 call python -m venv venv
 

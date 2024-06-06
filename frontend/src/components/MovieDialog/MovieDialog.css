@@ -8,6 +8,16 @@ dialog {
   background-color: #a8a8a8b4;
 }
 
+input[type='radio'] {
+  display: none;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 2rem;
+  margin: 5px;
+}
+
 .titleDiv img {
   width: 15em;
   height: auto;
