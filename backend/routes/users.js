@@ -6,15 +6,6 @@ import MovieUser from '../entities/movie_user.js';
 
 const router = express.Router();
 
-router.get('/', function (req, res) {
-  appDataSource
-    .getRepository(User)
-    .find({})
-    .then(function (users) {
-      res.json({ users: users });
-    });
-});
-
 router.post('/new', function (req, res, next) {
   if (req.body.password !== req.body.confirmPassword) {
     return res.redirect('http://localhost:3000/signup');
