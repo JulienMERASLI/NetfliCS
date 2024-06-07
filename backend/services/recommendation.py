@@ -40,7 +40,7 @@ def predict(ratings, similarity, mean_user_rating, type='user'):
 
 user_prediction = predict(movie_matrix, user_similarity, mean_user_rating, type='user')
 
-# Trouver les deux movie_id avec les valeurs de prédiction les plus élevées pour chaque user_id
+# Trouver les vingt movie_id avec les valeurs de prédiction les plus élevées pour chaque user_id
 #[:, -n:] n doit être le même que celui du film que vous souhaitez obtenir.
 top_highest_rated_movies = np.argsort(user_prediction, axis=1)[:, -20:][:, ::-1]
 user_ids = movie_table.index
