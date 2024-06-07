@@ -36,7 +36,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/new', async (req, res) => {
-  if (!req.body.rating) {
+  if (!req.body.rating || !req.body.movie_id || !req.body.movie_name) {
     return res.status(400).json({ message: 'Requête invalide' });
   }
   if (!req.isAuthenticated()) {
@@ -54,29 +54,27 @@ router.post('/new', async (req, res) => {
       movie_id: req.body.movie_id,
     };
     if (!movieInDb) {
-      await movieRepository.save({
+      movieRepository.save({
         movie_id: req.body.movie_id,
         movie_name: req.body.movie_name,
       });
     }
-    if (movieInDb) {
-      const movieUser = await movieUserRepository.findOne({
-        where: { movie, user },
+    const movieUser = await movieUserRepository.findOne({
+      where: { movie, user },
+    });
+    if (movieUser !== null) {
+      await movieUserRepository.update(
+        { movie, user },
+        { note: req.body.rating }
+      );
+      res.status(201).json({ message: 'Note mise à jour' });
+    } else {
+      await movieUserRepository.save({
+        movie: movieInDb,
+        user: user,
+        note: req.body.rating,
       });
-      if (movieUser !== null) {
-        await movieUserRepository.update(
-          { movie, user },
-          { note: req.body.rating }
-        );
-        res.status(201).json({ message: 'Note mise à jour' });
-      } else {
-        await movieUserRepository.save({
-          movie: movieInDb,
-          user: user,
-          note: req.body.rating,
-        });
-        res.status(201).json({ message: 'Note créée' });
-      }
+      res.status(201).json({ message: 'Note créée' });
     }
   } catch (e) {
     console.error(e);

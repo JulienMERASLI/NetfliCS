@@ -1,62 +1,13 @@
 # centrale-ei-web
 
-## Backend
+## Prérequis
 
-### Project setup
+- Node.js
+- Python 3
+- Windows
 
-```
-cd backend
-npm install
-cp .env.example .env
-```
+## Installation
 
-### Run database migrations
-
-```
-npm run migration:run
-```
-
-### Start and auto-reload for development
-
-```
-npm run dev
-```
-
-### Start for production
-
-```
-npm run start
-```
-
-### Lint and fix files
-
-```
-npm run lint
-```
-
-## Frontend
-
-### Project setup
-
-```
-cd frontend
-npm install
-```
-
-### Compile and hot-reload for development
-
-```
-npm run dev
-```
-
-### Compile and minifiy for production
-
-```
-npm run build
-```
-
-### Lint and fix files
-
-```
-npm run lint
-```
+- Lancer le script `install.bat` pour installer les dépendances et faire les migrations
+- Lancer le backend avec `cd backend && npm run dev`
+- Lancer le frontend avec `cd frontend && npm run dev`
