@@ -19,9 +19,9 @@ router.get('/:id', async (req, res) => {
     const userRepository = appDataSource.getRepository(Users);
     const user = await userRepository.findOne({ where: { id: req.user.id } });
     const movie_db = await movieRepository.findOne({
-      where: { movie_id: movie_id },
+      where: { movie_id },
     });
-    const movie = await appDataSource.getRepository(MovieUser).find({
+    const ratingMovie = await appDataSource.getRepository(MovieUser).find({
       select: ['note', 'id'],
       relations: {
         movie: true,
@@ -29,10 +29,10 @@ router.get('/:id', async (req, res) => {
       },
       where: { movie: movie_db, user: user },
     });
-    if (movie === undefined) {
+    if (ratingMovie === undefined) {
       res.status(404).json({ message: 'Film non trouvé' });
     } else {
-      res.status(200).json(movie);
+      res.status(200).json(ratingMovie);
     }
   } catch (e) {
     console.error(e);
@@ -51,10 +51,6 @@ router.post('/new', async (req, res) => {
   const movieRepository = appDataSource.getRepository(Movies);
 
   try {
-    await movieRepository.save({
-      movie_id: req.body.movie_id,
-      movie_name: req.body.movie_name,
-    });
     const userRepository = appDataSource.getRepository(Users);
     const user = await userRepository.findOne({
       where: { id: req.user.id },
@@ -62,11 +58,17 @@ router.post('/new', async (req, res) => {
     const movie = await movieRepository.findOne({
       where: { movie_id: req.body.movie_id },
     });
-    if (movie !== undefined) {
-      const exists = await movieUserRepository.findOne({
-        where: { movie: movie, user: user },
+    if (!movie) {
+      await movieRepository.save({
+        movie_id: req.body.movie_id,
+        movie_name: req.body.movie_name,
       });
-      if (exists !== null) {
+    }
+    if (movie) {
+      const movieUser = await movieUserRepository.findOne({
+        where: { movie, user },
+      });
+      if (movieUser !== null) {
         await movieUserRepository.update(
           { movie: movie, user: user },
           { note: req.body.rating }
