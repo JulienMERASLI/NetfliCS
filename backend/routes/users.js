@@ -53,9 +53,6 @@ router.get('/MyList', async function (req, res) {
   if (!req.user) {
     return res.status(401).json({ message: 'Unauthorized' });
   } else {
-    const user = await appDataSource.getRepository(User).findOne({
-      where: { id: req.user.id },
-    });
     appDataSource
       .getRepository(MovieUser)
       .find({
@@ -64,7 +61,7 @@ router.get('/MyList', async function (req, res) {
           user: true,
         },
         where: {
-          user: user,
+          user: req.user,
           movie: {
             movie_name: req.query.search
               ? Like('%' + req.query.search + '%')

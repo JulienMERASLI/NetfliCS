@@ -1,0 +1,22 @@
+demonstration: paul
+on cree un compte
+on se connecte
+on change l'ordre
+on note des films
+on fait une recherche par genres
+on fait une recherche par nom
+Clique logo pour revenir
+on regarde les recommandations
+on regarde mylist
+on fait une recherche dans mylist
+on se deconnecte
+
+architecture: paul
+
+recommandation: zenta
+
+fonctionnalité particulière: julien
+fonctionnement de mylist avec la requete sur le serveur
+
+présentation d'un bug: tout le monde
+note pour les nouveaux films / nouveaux utilisateurs / changer une note
