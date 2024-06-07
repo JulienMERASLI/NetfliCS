@@ -7,7 +7,7 @@ import {
 } from '../../pages/Home/Home';
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
-import { useLoading } from '../../Hook/useLoading';
+import { useProgressBar } from '../../Hook/useProgressBar';
 import { useQS } from '../../Hook/useQS';
 
 const DEFAULT_FORM_VALUES = {
@@ -20,73 +20,79 @@ const useFetchMovie = (movieId, setRating, rating) => {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(null);
 
-  useLoading(loading);
+  useProgressBar(loading);
 
-  useEffect(() => {
-    if (!movieId) {
-      return;
-    }
-    setLoading(true);
-    axios
-      .get(`https://api.themoviedb.org/3/movie/${movieId}`, {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-        },
-      })
-      .then((response) => {
-        setMovie(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [movieId, setRating]);
-
-  useEffect(() => {
-    if (loading === false) {
-      if (movieId) {
-        const form_movie = DEFAULT_FORM_VALUES;
-        form_movie.movie_id = movieId;
-        form_movie.rating = rating;
-        form_movie.movie_name = movie.title;
-
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
-          method: 'POST',
-          credentials: 'include',
-          body: JSON.stringify(form_movie),
+  useEffect(
+    function fetchMovieData() {
+      if (!movieId) {
+        return;
+      }
+      setLoading(true);
+      axios
+        .get(`https://api.themoviedb.org/3/movie/${movieId}`, {
           headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${API_KEY}`,
           },
         })
-          .finally(() => {
-            axios
-              .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${movieId}`, {
-                withCredentials: true,
-              })
-              .then((res) => {
-                if (res.data && res.data.length && res.data.length === 1) {
-                  setRating(res.data[0].note);
-                }
-              });
+        .then((response) => {
+          setMovie(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+    [movieId, setRating]
+  );
+
+  useEffect(
+    function fetchMovieRatingAndUpdate() {
+      if (loading === false) {
+        if (movieId) {
+          const form_movie = DEFAULT_FORM_VALUES;
+          form_movie.movie_id = movieId;
+          form_movie.rating = rating;
+          form_movie.movie_name = movie.title;
+
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/movies/new`, {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify(form_movie),
+            headers: {
+              'Content-Type': 'application/json',
+            },
           })
-          .catch((error) => {
-            console.error(error);
-          });
-      } else {
-        setRating(0);
+            .finally(() => {
+              axios
+                .get(`${import.meta.env.VITE_BACKEND_URL}/movies/${movieId}`, {
+                  withCredentials: true,
+                })
+                .then((res) => {
+                  if (res.data && res.data.length && res.data.length === 1) {
+                    setRating(res.data[0].note);
+                  }
+                });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          setRating(0);
+        }
       }
-    }
-  }, [
-    setRating,
-    rating,
-    movieId,
-    loading,
-    movie.vote_average,
-    movie.genres,
-    movie.title,
-  ]);
+    },
+    [
+      setRating,
+      rating,
+      movieId,
+      loading,
+      movie.vote_average,
+      movie.genres,
+      movie.title,
+    ]
+  );
 
   return { movie, loading };
 };
@@ -152,9 +158,8 @@ export const MovieDialog = () => {
     };
   }, [movieSelectedId, setMovieSelectedId]);
 
-  // Handle browser back button
   useEffect(() => {
-    const handlePopState = (event) => {
+    const handlePopState = () => {
       setMovieSelectedId(null);
     };
 

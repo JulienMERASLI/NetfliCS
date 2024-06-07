@@ -1,7 +1,7 @@
 import nprogress from 'nprogress';
 import { useEffect } from 'react';
 
-export const useLoading = (loading) => {
+export const useProgressBar = (loading) => {
   useEffect(() => {
     if (loading) {
       nprogress.start();

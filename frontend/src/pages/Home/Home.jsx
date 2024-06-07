@@ -1,15 +1,13 @@
 import { createContext, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useDebounce } from 'use-debounce';
 import './Home.css';
-import 'nprogress/nprogress.css';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { Recommandation } from '../../components/Recommandation/Recommandation';
 import { FilterSearch } from '../../components/FilterSearch/FilterSearch';
-import { useLoading } from '../../Hook/useLoading';
+import { useProgressBar } from '../../Hook/useProgressBar';
 import { useConnection } from '../../Hook/useConnection';
 import { useQS } from '../../Hook/useQS';
 
@@ -25,7 +23,7 @@ const useFetchMovies = (movieName) => {
   const [loading, setLoading] = useState(null);
   const [page] = usePage();
 
-  useLoading(loading);
+  useProgressBar(loading);
 
   useEffect(() => {
     if (!movieName) {
@@ -112,10 +110,8 @@ function Home() {
   );
 }
 
-// TODO: améliorer le code
 // TODO: faire le .env pour la prod
 // TODO: afficher sur le front les erreurs du back
 // TODO: validation formulaires serveur (en cours, reste que la vérification du mail)
-// TODO: Empecher le back de chnaner l'url
 
 export default Home;

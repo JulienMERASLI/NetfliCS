@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { API_KEY, MovieSelectedContext, RatingContext } from '../Home/Home';
 import { MovieDialog } from '../../components/MovieDialog/MovieDialog';
-import { useLoading } from '../../Hook/useLoading';
+import { useProgressBar } from '../../Hook/useProgressBar';
 import { useConnection } from '../../Hook/useConnection';
 
 function MyList() {
@@ -16,7 +16,7 @@ function MyList() {
   const [loading, setLoading] = useState(null);
 
   useConnection();
-  useLoading(loading);
+  useProgressBar(loading);
 
   useEffect(() => {
     setLoading(true);

@@ -1,7 +1,7 @@
 import { Movie } from '../Movie/Movie';
 import { usePage } from '../../pages/Home/Home';
 
-const Buttons = () => {
+const Buttons = ({ showNext = true }) => {
   const [page, setPage] = usePage();
 
   return (
@@ -9,7 +9,7 @@ const Buttons = () => {
       {page > 1 && (
         <button onClick={() => setPage(page - 1)}>Previous page</button>
       )}
-      <button onClick={() => setPage(page + 1)}>Next page</button>
+      {showNext && <button onClick={() => setPage(page + 1)}>Next page</button>}
     </div>
   );
 };
@@ -41,7 +41,10 @@ export const SearchResults = ({
         {showButtons && <Buttons />}
       </>
     ) : (
-      <div className="replacementText">No movie found</div>
+      <>
+        <div className="replacementText">No movie found</div>
+        {showButtons && <Buttons showNext={false} />}
+      </>
     ))
   );
 };

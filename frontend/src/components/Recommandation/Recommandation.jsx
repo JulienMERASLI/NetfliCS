@@ -2,14 +2,14 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { API_KEY, RatingContext } from '../../pages/Home/Home';
-import { useLoading } from '../../Hook/useLoading';
+import { useProgressBar } from '../../Hook/useProgressBar';
 import './Recommandation.css';
 
 export const useFetchRecommended = (rating) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(null);
 
-  useLoading(loading);
+  useProgressBar(loading);
 
   useEffect(() => {
     setLoading(true);

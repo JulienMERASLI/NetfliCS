@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import nprogress from 'nprogress';
 import { useNavigate } from 'react-router-dom';
 import useFetchConnected from '../../Hook/useFetchConnected';
+import 'nprogress/nprogress.css';
 
 const Header = () => {
   const { connected, pseudo } = useFetchConnected();

@@ -16,7 +16,7 @@ function AddUserForm() {
 
   useEffect(() => {
     const currentForm = form.current;
-    const handler = (e) => {
+    const submitHandler = (e) => {
       e.preventDefault();
       if (formValues.password !== formValues.confirmPassword) {
         setPasswordMismatch(true);
@@ -26,10 +26,10 @@ function AddUserForm() {
       form.current.submit();
     };
 
-    currentForm.addEventListener('submit', handler);
+    currentForm.addEventListener('submit', submitHandler);
 
     return () => {
-      currentForm.removeEventListener('submit', handler);
+      currentForm.removeEventListener('submit', submitHandler);
     };
   }, [formValues.confirmPassword, formValues.password]);
 

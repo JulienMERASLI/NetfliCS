@@ -3,7 +3,7 @@ import axios from 'axios';
 import { API_KEY, usePage } from '../../pages/Home/Home';
 import './FilterSearch.css';
 import { SearchResults } from '../SearchResults/SearchResults';
-import { useLoading } from '../../Hook/useLoading';
+import { useProgressBar } from '../../Hook/useProgressBar';
 
 const sortChoices = [
   { value: 'original_title', label: 'Original title' },
@@ -19,9 +19,9 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(null);
 
-  const [page, setPage] = usePage();
+  const [page] = usePage();
 
-  useLoading(loading);
+  useProgressBar(loading);
 
   useEffect(() => {
     setLoading(true);
