@@ -3,12 +3,13 @@ import './Header.css';
 import logo from '/logo.png';
 import { useEffect } from 'react';
 import nprogress from 'nprogress';
+import { useNavigate } from 'react-router-dom';
 import useFetchConnected from '../../Hook/useFetchConnected';
 
 const Header = () => {
   const { connected, pseudo } = useFetchConnected();
-
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     nprogress.start();
@@ -17,9 +18,9 @@ const Header = () => {
 
   return (
     <div className="Header-container">
-      <div className="logoContainer">
+      <button className="logoContainer" onClick={() => navigate('/')}>
         <img src={logo} alt="logo" id="logo" />
-      </div>
+      </button>
       <div className="Links-container">
         {connected === false && (
           <>

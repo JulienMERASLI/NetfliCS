@@ -19,7 +19,7 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(null);
 
-  const [page] = usePage();
+  const [page, setPage] = usePage();
 
   useLoading(loading);
 
@@ -39,6 +39,10 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
         console.log(error);
       });
   }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [currentCategories, sortBy]);
 
   useEffect(() => {
     const category_filter = currentCategories.join('%2C'); // %2C is the URL encoding for a comma

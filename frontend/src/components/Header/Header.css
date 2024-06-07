@@ -20,13 +20,13 @@
   position: relative;
 }
 
-.Link:hover {
-  background-color: hsl(273, 13%, 30%);
-}
 .logoContainer {
   width: 100%;
   display: flex;
   justify-content: center;
+  background-color: #231e2700;
+  border: none;
+  cursor: pointer;
 }
 
 .Links-container {

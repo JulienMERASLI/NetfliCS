@@ -133,6 +133,19 @@ export const MovieDialog = () => {
     };
   }, [movieSelectedId, setMovieSelectedId]);
 
+  // Handle browser back button
+  useEffect(() => {
+    const handlePopState = (event) => {
+      setMovieSelectedId(null);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [setMovieSelectedId]);
+
   return (
     <dialog ref={dialog}>
       <div className="container">

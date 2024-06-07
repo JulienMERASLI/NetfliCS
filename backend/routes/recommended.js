@@ -4,6 +4,10 @@ import { exec } from 'child_process';
 const router = express.Router();
 
 router.get('/', function (req, res) {
+  if (!req.isAuthenticated()) {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+
   exec(`call run_python.bat ${req.user.id}`, (error, stdout) => {
     if (error) {
       console.error(`Error: ${error.message}`);

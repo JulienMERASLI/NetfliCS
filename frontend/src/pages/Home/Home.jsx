@@ -111,14 +111,13 @@ function Home() {
     </MovieSelectedContext.Provider>
   );
 }
-// TODO: style du loading
+
 // TODO: améliorer le code
 // TODO: faire le .env pour la prod
 // TODO: afficher sur le front les erreurs du back
-// TODO: Afficher pas de recommandation si python crash
-// TODO: validation formulaires serveur
-// TODO: Go back sur les popup
-// TODO: Envoyer la page en query
-// TODO: Changer de page pour les filtres
+// TODO: validation formulaires serveur (en cours, reste que la vérification du mail)
+// TODO: Empecher le back de chnaner l'url
+// TODO: Envoyer la page en query pour détails des films
+// TODO: Changer la page dans l'url ne la change pas => utiliser useNavigate, faire idem pour la recherche
 
 export default Home;
