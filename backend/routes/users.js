@@ -68,6 +68,9 @@ router.get('/MyList', async function (req, res) {
               : undefined,
           },
         },
+        order: {
+          note: 'DESC',
+        },
       })
       .then(async (movies) => {
         res.json({ movies: movies });
