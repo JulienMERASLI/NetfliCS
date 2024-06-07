@@ -50,7 +50,7 @@ router.post('/new', function (req, res, next) {
 });
 
 router.get('/MyList', async function (req, res) {
-  if (!req.user) {
+  if (!req.isAuthenticated()) {
     return res.status(401).json({ message: 'Unauthorized' });
   } else {
     appDataSource
@@ -73,7 +73,7 @@ router.get('/MyList', async function (req, res) {
         },
       })
       .then(async (movies) => {
-        res.json({ movies: movies });
+        res.json({ movies });
       })
       .catch((e) => {
         console.error(e);
