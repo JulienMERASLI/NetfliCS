@@ -64,7 +64,7 @@ router.get('/MyList', async function (req, res) {
           user: req.user,
           movie: {
             movie_name: req.query.search
-              ? Like('%' + req.query.search + '%')
+              ? Like(`%${req.query.search}%`)
               : undefined,
           },
         },

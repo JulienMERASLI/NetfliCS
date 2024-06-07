@@ -29,14 +29,14 @@ function MyList() {
           withCredentials: true,
         }
       )
-      .then(async (response) => {
+      .then(async (apiResponse) => {
         const movies_list = await Promise.all(
-          response.data.movies.map(({ movie }) => {
+          apiResponse.data.movies.map(({ movie }) => {
             return axios
               .get(`https://api.themoviedb.org/3/movie/${movie.movie_id}`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
               })
-              .then((response2) => response2.data);
+              .then((tmdbResponse) => tmdbResponse.data);
           })
         );
         setMyList(movies_list);
