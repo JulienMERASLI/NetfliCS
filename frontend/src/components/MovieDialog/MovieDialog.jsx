@@ -70,6 +70,7 @@ const useFetchMovieAndUpdate = (movieId, setRating, rating) => {
                   withCredentials: true,
                 })
                 .then((res) => {
+                  console.log(res.data);
                   if (res.data && res.data.length && res.data.length === 1) {
                     setRating(res.data[0].note);
                   }

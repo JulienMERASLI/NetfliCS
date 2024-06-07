@@ -42,8 +42,8 @@ export const Recommandation = () => {
   const { movies, loading } = useFetchRecommended(rating);
 
   return (
-    <div>
-      <h2>Recommendations</h2>
+    <div className="recommendationsContainer">
+      <h2 className="recommendationsTitle">Recommendations</h2>
       <div className="movies recommendationsDiv">
         <SearchResults
           loading={loading}

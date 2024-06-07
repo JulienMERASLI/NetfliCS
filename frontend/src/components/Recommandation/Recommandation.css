@@ -5,8 +5,8 @@
 
 .movies.recommendationsDiv::-webkit-scrollbar {
   width: 5px;
-  height: 8px;
-  background-color: #aaa;
+  height: 5px;
+  background-color: #808080;
   border-radius: 10px;
 }
 
@@ -22,4 +22,15 @@
   width: fit-content;
   overflow-x: auto;
   width: calc(100vw - 60px);
+}
+
+.recommendationsTitle {
+  padding: 1em;
+  padding-bottom: 0;
+}
+
+.recommendationsContainer {
+  border-radius: 20px;
+  background-color: #231e27;
+  margin-bottom: 1em;
 }
