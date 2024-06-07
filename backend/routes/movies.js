@@ -15,19 +15,14 @@ router.get('/:id', async (req, res) => {
   }
   try {
     const movie_id = req.params.id;
-    const movieRepository = appDataSource.getRepository(Movies);
-    const userRepository = appDataSource.getRepository(Users);
-    const user = await userRepository.findOne({ where: { id: req.user.id } });
-    const movie_db = await movieRepository.findOne({
-      where: { movie_id },
-    });
+    const { user } = req;
     const ratingMovie = await appDataSource.getRepository(MovieUser).find({
       select: ['note', 'id'],
       relations: {
         movie: true,
         user: true,
       },
-      where: { movie: movie_db, user: user },
+      where: { movie: { movie_id }, user: user },
     });
     if (ratingMovie === undefined) {
       res.status(404).json({ message: 'Film non trouvé' });
@@ -51,32 +46,32 @@ router.post('/new', async (req, res) => {
   const movieRepository = appDataSource.getRepository(Movies);
 
   try {
-    const userRepository = appDataSource.getRepository(Users);
-    const user = await userRepository.findOne({
-      where: { id: req.user.id },
-    });
-    let movie = await movieRepository.findOne({
+    const { user } = req;
+    const movieInDb = await movieRepository.findOne({
       where: { movie_id: req.body.movie_id },
     });
-    if (!movie) {
-      movie = await movieRepository.save({
+    const movie = {
+      movie_id: req.body.movie_id,
+    };
+    if (!movieInDb) {
+      await movieRepository.save({
         movie_id: req.body.movie_id,
         movie_name: req.body.movie_name,
       });
     }
-    if (movie) {
+    if (movieInDb) {
       const movieUser = await movieUserRepository.findOne({
         where: { movie, user },
       });
       if (movieUser !== null) {
         await movieUserRepository.update(
-          { movie: movie, user: user },
+          { movie, user },
           { note: req.body.rating }
         );
         res.status(201).json({ message: 'Note mise à jour' });
       } else {
         await movieUserRepository.save({
-          movie: movie,
+          movie: movieInDb,
           user: user,
           note: req.body.rating,
         });
