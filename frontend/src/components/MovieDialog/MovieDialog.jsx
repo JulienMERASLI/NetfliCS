@@ -200,6 +200,7 @@ export const MovieDialog = () => {
               </p>
               <p>
                 <span className="category">Rating :</span>{' '}
+                {/* Showing the stars */}
                 {[...Array(totalStars)].map((star, index) => {
                   const currentRating = index + 1;
 

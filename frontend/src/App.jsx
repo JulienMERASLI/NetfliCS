@@ -4,8 +4,11 @@ import MyList from './pages/MyList/MyList';
 import Layout from './components/Layout/Layout';
 import Auth from './pages/Auth/Auth';
 import Signup from './pages/Signup/Signup';
+import { useTitle } from './Hook/useTitle';
 
 function App() {
+  useTitle('NetfliCS');
+
   return (
     <Layout>
       <Routes>
