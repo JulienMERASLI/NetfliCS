@@ -12,6 +12,7 @@
 
 .movies.recommendationsDiv::-webkit-scrollbar-thumb {
   background: #000;
+  border-radius: 10px;
 }
 
 #movieList.recommendations .movie {
