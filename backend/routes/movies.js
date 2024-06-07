@@ -2,7 +2,6 @@ import express from 'express';
 import { appDataSource } from '../datasource.js';
 import MovieUser from '../entities/movie_user.js';
 import Movies from '../entities/movies.js';
-import Users from '../entities/user.js';
 
 const router = express.Router();
 
