@@ -57,7 +57,7 @@ function MyList() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <SearchResults loading={false} movies={myList} />
+        <SearchResults loading={loading} movies={myList} />
         {createPortal(<MovieDialog />, document.body)}
       </RatingContext.Provider>
     </MovieSelectedContext.Provider>

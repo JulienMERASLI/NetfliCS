@@ -55,11 +55,11 @@ router.post('/new', async (req, res) => {
     const user = await userRepository.findOne({
       where: { id: req.user.id },
     });
-    const movie = await movieRepository.findOne({
+    let movie = await movieRepository.findOne({
       where: { movie_id: req.body.movie_id },
     });
     if (!movie) {
-      await movieRepository.save({
+      movie = await movieRepository.save({
         movie_id: req.body.movie_id,
         movie_name: req.body.movie_name,
       });

@@ -16,7 +16,7 @@ const DEFAULT_FORM_VALUES = {
   rating: 0,
 };
 
-const useFetchMovie = (movieId, setRating, rating) => {
+const useFetchMovieAndUpdate = (movieId, setRating, rating) => {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(null);
 
@@ -104,7 +104,11 @@ export const MovieDialog = () => {
   const [rating, setRating] = useContext(RatingContext);
   const [hover, setHover] = useState(null);
   const [totalStars] = useState(10);
-  const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
+  const { movie, loading } = useFetchMovieAndUpdate(
+    movieSelectedId,
+    setRating,
+    rating
+  );
 
   const [movieIdQS, setMovieIdQS] = useQS('movie_id', '0');
 

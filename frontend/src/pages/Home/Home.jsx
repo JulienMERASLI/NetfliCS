@@ -74,9 +74,7 @@ function Home() {
   }, [movieName]);
 
   useEffect(() => {
-    if (searchQS !== '') {
-      setMovieName(searchQS);
-    }
+    setMovieName(searchQS);
   }, [searchQS]);
 
   return (
