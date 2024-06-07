@@ -11,21 +11,14 @@ import { Recommandation } from '../../components/Recommandation/Recommandation';
 import { FilterSearch } from '../../components/FilterSearch/FilterSearch';
 import { useLoading } from '../../Hook/useLoading';
 import { useConnection } from '../../Hook/useConnection';
+import { useQS } from '../../Hook/useQS';
 
 export const API_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxZjlmNjAwMzY4MzMzODNkNGIwYjNhNzJiODA3MzdjNCIsInN1YiI6IjY0NzA5YmE4YzVhZGE1MDBkZWU2ZTMxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Em7Y9fSW94J91rbuKFjDWxmpWaQzTitxRKNdQ5Lh2Eo';
 
-export const usePage = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const page = parseInt(searchParams.get('page') || '1');
+export const usePage = () => useQS('page', '1', true);
 
-  const navigate = useNavigate();
-
-  const setPage = (p) => navigate(`?page=${p}`);
-
-  return [page, setPage];
-};
+const useSearchQS = () => useQS('search', '');
 
 const useFetchMovies = (movieName) => {
   const [movies, setMovies] = useState([]);
@@ -76,10 +69,17 @@ function Home() {
   const [movieSelected, setMovieSelected] = useState(null);
   const [rating, setRating] = useState(0);
 
+  const [searchQS, setSearchQS] = useSearchQS();
   useEffect(() => {
-    setPage(1);
+    setSearchQS(movieName);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movieName]);
+
+  useEffect(() => {
+    if (searchQS !== '') {
+      setMovieName(searchQS);
+    }
+  }, [searchQS]);
 
   return (
     <MovieSelectedContext.Provider value={[movieSelected, setMovieSelected]}>
@@ -117,7 +117,5 @@ function Home() {
 // TODO: afficher sur le front les erreurs du back
 // TODO: validation formulaires serveur (en cours, reste que la vérification du mail)
 // TODO: Empecher le back de chnaner l'url
-// TODO: Envoyer la page en query pour détails des films
-// TODO: Changer la page dans l'url ne la change pas => utiliser useNavigate, faire idem pour la recherche
 
 export default Home;

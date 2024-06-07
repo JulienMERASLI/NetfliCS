@@ -41,10 +41,6 @@ const useFetchCategories = (currentCategories, sortBy, setMovies) => {
   }, [page]);
 
   useEffect(() => {
-    setPage(1);
-  }, [currentCategories, sortBy]);
-
-  useEffect(() => {
     const category_filter = currentCategories.join('%2C'); // %2C is the URL encoding for a comma
     let url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&page=${page}&language=en-US&sort_by=${sortBy}.desc`;
     if (currentCategories.length !== 0) {
@@ -76,6 +72,8 @@ export const FilterSearch = () => {
   const [sortBy, setSortBy] = useState('popularity');
   const [currentCategories, setCurrentCategories] = useState([]);
   const [movies, setMovies] = useState([]);
+  const [, setPage] = usePage();
+
   const { categories, loading } = useFetchCategories(
     currentCategories,
     sortBy,
@@ -87,14 +85,20 @@ export const FilterSearch = () => {
       <div className="filters">
         <h2>Filters</h2>
         <h3>Sort by</h3>
-        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <select
+          value={sortBy}
+          onChange={(e) => {
+            setSortBy(e.target.value);
+            setPage(1);
+          }}
+        >
           {sortChoices.map((choice) => (
             <option key={choice.value} value={choice.value}>
               {choice.label}
             </option>
           ))}
         </select>
-        <h3>Catégories</h3>
+        <h3>Categories</h3>
         <ul>
           {categories.map((category) => (
             <li key={category.id}>
@@ -110,6 +114,7 @@ export const FilterSearch = () => {
                       currentCategories.filter((id) => id !== category.id)
                     );
                   }
+                  setPage(1);
                 }}
               />
               <label htmlFor={category.id}>{category.name}</label>

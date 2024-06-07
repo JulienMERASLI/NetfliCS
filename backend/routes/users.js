@@ -14,7 +14,7 @@ router.post('/new', function (req, res, next) {
     req.body.pseudo.length < 3 ||
     req.body.pseudo.length > 20 ||
     req.body.birthdate.length !== 10 ||
-    !req.body.birthdate.match(/^\d{4}-\d{2}-\d{2}$/) // Check the mail
+    !req.body.birthdate.match(/^\d{4}-\d{2}-\d{2}$/)
   ) {
     return res.redirect(`${process.env.VITE_FRONTEND_URL}/signup`);
   }

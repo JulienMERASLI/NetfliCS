@@ -8,6 +8,7 @@ import {
 import './MovieDialog.css';
 import { TmdbImage } from '../TmdbImage';
 import { useLoading } from '../../Hook/useLoading';
+import { useQS } from '../../Hook/useQS';
 
 const DEFAULT_FORM_VALUES = {
   movie_id: 0,
@@ -98,6 +99,24 @@ export const MovieDialog = () => {
   const [hover, setHover] = useState(null);
   const [totalStars] = useState(10);
   const { movie, loading } = useFetchMovie(movieSelectedId, setRating, rating);
+
+  const [movieIdQS, setMovieIdQS] = useQS('movie_id', '0');
+
+  useEffect(() => {
+    if (movieSelectedId !== null) {
+      setMovieIdQS(movieSelectedId);
+    } else {
+      setMovieIdQS('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movieSelectedId]);
+
+  useEffect(() => {
+    if (movieIdQS !== '0') {
+      setMovieSelectedId(movieIdQS);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movieIdQS]);
 
   useEffect(() => {
     if (movieSelectedId) {
